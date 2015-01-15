@@ -1,0 +1,25 @@
+# -----------------------------------------
+# File: .gitignore
+# 
+# PFE-46, 2014-2015
+# Polytech Nice Sophia - Computer Sciences
+# -----------------------------------------
+
+# Temporary
+*~
+
+# Unwanted
+target
+
+# Mac OS
+.DS_Store
+
+# Eclipse
+.classpath
+.settings
+.project
+
+# IntelliJ
+.idea
+*.iml
+*.iws
