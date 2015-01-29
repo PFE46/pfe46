@@ -1,14 +1,8 @@
 package fr.unice.polytech.si5.pfe46;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
-
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpMethod;

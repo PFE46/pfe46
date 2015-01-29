@@ -17,14 +17,14 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
  * 
  * @author victorsalle
  */
-public class Generator {
+public class VelocityGenerator {
 
 	VelocityEngine velocityEngine;
 	
 	/**
 	 * Constructor.
 	 */
-	public Generator()
+	public VelocityGenerator()
 	{
     	// Properties to set 'src/main/resources' as Velocity template root folder
     	Properties properties = new Properties();

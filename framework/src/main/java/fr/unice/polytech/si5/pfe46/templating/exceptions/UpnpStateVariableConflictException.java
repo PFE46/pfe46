@@ -4,7 +4,8 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariable;
 
 /**
  * Exception to throw if the user wants to add a state variable that already exists
- * in the current context.
+ * in the current context but with different attributes (e.g. same name but the existing
+ * one doesn't send events whereas the new one does).
  * 
  * @author victorsalle
  */

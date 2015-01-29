@@ -7,6 +7,10 @@ package fr.unice.polytech.si5.pfe46;
  */
 public class Config {
 
+	// Generated file
+	
+	public static final String GENERATED_FILE_NAME = "project.zip";
+	
 	// Velocity
 	
 	public static final String VELOCITY_TEMPLATE_FOLDER = "velocity_templates";

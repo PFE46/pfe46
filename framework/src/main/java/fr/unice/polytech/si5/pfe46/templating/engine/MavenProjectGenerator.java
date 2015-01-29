@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import fr.unice.polytech.si5.pfe46.Config;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 
@@ -16,9 +17,9 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
  */
 public class MavenProjectGenerator {
 
-	private Generator generator;
+	private VelocityGenerator generator;
 	
-	private static final String MAVEN_STRUCTURE_JAVA = "src/main/java/";
+	private static final String MAVEN_STRUCTURE_JAVA = "src" + File.separator + "main" + File.separator + "java" + File.separator;
 	private static final String MAVEN_POM_XML = "pom.xml";
 	
 	/**
@@ -26,7 +27,7 @@ public class MavenProjectGenerator {
 	 */
 	public MavenProjectGenerator()
 	{
-		generator = new Generator();
+		generator = new VelocityGenerator();
 	}
 	
 	/**
@@ -42,7 +43,7 @@ public class MavenProjectGenerator {
 		
 		try
 		{
-			zipProject = new File("project.zip");
+			zipProject = new File(Config.GENERATED_FILE_NAME);
 			out = new ZipOutputStream(new FileOutputStream(zipProject));
 		
 			// Generate services
