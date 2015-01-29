@@ -1,0 +1,29 @@
+package fr.unice.polytech.si5.pfe46.generated;
+
+import org.apache.commons.io.IOUtils;
+import org.fourthline.cling.binding.annotations.*;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+@UpnpService(serviceId = @UpnpServiceId("$service.name"),
+            serviceType = @UpnpServiceType(value = "$service.name", version = 1))
+@UpnpStateVariables(
+    {
+#foreach( $variable in $service.stateVariables )
+        @UpnpStateVariable(name = "$variable.name", datatype = "$variable.datatype.clingType", defaultValue = "$variable.datatype.defaultValue", sendEvents = $variable.sendEvents)#if( $foreach.hasNext ),#end
+
+#end
+    }
+)
+public class $service.name {
+
+#foreach( $method in $service.methods)
+#parse("velocity_templates/method.vm")
+
+
+#end
+
+}
