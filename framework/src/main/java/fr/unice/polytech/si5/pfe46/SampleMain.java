@@ -10,6 +10,7 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariable;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariableType;
 import fr.unice.polytech.si5.pfe46.templating.engine.MavenProjectGenerator;
+import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
 
 public class SampleMain 
@@ -81,7 +82,7 @@ public class SampleMain
         {
         	weatherService.addMethod(getTemperature);
         }
-        catch (UpnpStateVariableConflictException e)
+        catch (UpnpStateVariableConflictException | DuplicateMethodSignatureException e)
         {
         	System.err.println(e);
         }

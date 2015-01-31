@@ -1,8 +1,9 @@
 package fr.unice.polytech.si5.pfe46.templating.components;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
+import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
 import fr.unice.polytech.si5.pfe46.utils.Pair;
 
@@ -27,7 +28,7 @@ public class UpnpService {
 	 */
 	public UpnpService()
 	{
-		methods = new HashSet<UpnpMethod>();
+		methods = new LinkedHashSet<UpnpMethod>();
 	}
 
 	/**
@@ -56,9 +57,19 @@ public class UpnpService {
 	 * 
 	 * @param method Method to add.
 	 * @throws UpnpStateVariableConflictException If there is a conflict between service's state variables and one of the given method.
+	 * @throws DuplicateMethodSignatureException If the method's signature already exists in this service.
 	 */
-	public void addMethod(UpnpMethod method) throws UpnpStateVariableConflictException
+	public void addMethod(UpnpMethod method) throws UpnpStateVariableConflictException, DuplicateMethodSignatureException
 	{
+		// Check if the method's signature doesn't exist yet
+		for (UpnpMethod existingMethod : methods)
+		{
+			if (method.sameSignature(existingMethod))
+			{
+				throw new DuplicateMethodSignatureException(method);
+			}
+		}
+		
 		// Check if there is no conflict between existing state variables and one of the given method
 		Pair<UpnpStateVariable, UpnpStateVariable> conflict = UpnpStateVariable.checkNoConflict(this.getStateVariables(), method.getStateVariables());
 
@@ -78,7 +89,7 @@ public class UpnpService {
 	 */
 	public Set<UpnpStateVariable> getStateVariables()
 	{
-		Set<UpnpStateVariable> stateVariables = new HashSet<UpnpStateVariable>();
+		Set<UpnpStateVariable> stateVariables = new LinkedHashSet<UpnpStateVariable>();
 
 		for (UpnpMethod method : methods)
 		{

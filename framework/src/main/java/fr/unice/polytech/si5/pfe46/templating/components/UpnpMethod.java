@@ -1,6 +1,6 @@
 package fr.unice.polytech.si5.pfe46.templating.components;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
@@ -28,8 +28,8 @@ public class UpnpMethod {
 	 */
 	public UpnpMethod()
 	{
-		this.inputs = new HashSet<UpnpStateVariable>();
-		this.exceptions = new HashSet<Class<? extends Exception>>();
+		this.inputs = new LinkedHashSet<UpnpStateVariable>();
+		this.exceptions = new LinkedHashSet<Class<? extends Exception>>();
 	}
 	
 	/**
@@ -129,7 +129,7 @@ public class UpnpMethod {
 	 */
 	public Set<UpnpStateVariable> getStateVariables()
 	{
-		Set<UpnpStateVariable> stateVariables = new HashSet<UpnpStateVariable>();
+		Set<UpnpStateVariable> stateVariables = new LinkedHashSet<UpnpStateVariable>();
 		if (hasInputs())
 		{
 			stateVariables.addAll(inputs);
@@ -139,6 +139,36 @@ public class UpnpMethod {
 			stateVariables.add(output);
 		}
 		return stateVariables;
+	}
+	
+	/**
+	 * Check if the given method will have the same Java signature.
+	 * 
+	 * @param other Method to check with.
+	 * @return True if the method will have the same Java signature, false otherwise.
+	 */
+	public boolean sameSignature(UpnpMethod other)
+	{
+		if (name.equals(other.name))
+		{
+			if (!hasInputs() && !other.hasInputs())
+			{
+				return true;
+			}
+			
+			for (UpnpStateVariable variable : inputs)
+			{
+				for (UpnpStateVariable otherVariable : other.inputs)
+				{
+					if (variable.getName().equals(otherVariable.getName())
+							&& variable.getDatatype().equals(otherVariable.getDatatype()))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	//

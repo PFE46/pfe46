@@ -54,7 +54,7 @@ public class VelocityGenerator {
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
 		
-		return writer.toString();
+		return formatJavaCode(writer.toString());
 	}
 
 	/**
@@ -73,8 +73,8 @@ public class VelocityGenerator {
 		
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
-		
-		return writer.toString();
+
+		return formatJavaCode(writer.toString());
 	}
 
 	/**
@@ -95,6 +95,19 @@ public class VelocityGenerator {
 		template.merge(context, writer);
 		
 		return writer.toString();
+	}
+	
+	/**
+	 * Format a Java code.
+	 * 
+	 * @param code Code to format.
+	 * @return Formatted code or original code if an error occurred.
+	 */
+	private String formatJavaCode(String code)
+	{
+		// TODO
+		
+		return code;
 	}
 	
 }

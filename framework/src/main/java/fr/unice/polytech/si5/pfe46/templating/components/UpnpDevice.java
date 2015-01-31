@@ -1,6 +1,6 @@
 package fr.unice.polytech.si5.pfe46.templating.components;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +22,7 @@ public class UpnpDevice {
 	
 	public UpnpDevice()
 	{
-		services = new HashSet<UpnpService>();
+		services = new LinkedHashSet<UpnpService>();
 	}
 	
 	//
