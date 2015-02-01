@@ -24,8 +24,10 @@ public class MavenProjectGenerator {
 	
 	/**
 	 * Constructor.
+	 * 
+	 * @throws IOException 
 	 */
-	public MavenProjectGenerator()
+	public MavenProjectGenerator() throws IOException
 	{
 		generator = new VelocityGenerator();
 	}
@@ -46,14 +48,14 @@ public class MavenProjectGenerator {
 			zipProject = new File(Config.GENERATED_FILE_NAME);
 			out = new ZipOutputStream(new FileOutputStream(zipProject));
 		
-			// Generate services
+			// Generate services files
 			for (UpnpService service : device.getServices())
 			{
 				String serviceCode = generator.generateService(service);
 				createZipEntry(out, MAVEN_STRUCTURE_JAVA + service.getName() + ".java", serviceCode);
 			}
 			
-			// Generate the device
+			// Generate the device file
 			String serverCode = generator.generateServer(device);
 			createZipEntry(out, MAVEN_STRUCTURE_JAVA + device.getDeviceName() + "Server.java", serverCode);
 			

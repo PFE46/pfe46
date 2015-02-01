@@ -1,6 +1,6 @@
 package fr.unice.polytech.si5.pfe46.templating.engine;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Properties;
 
@@ -19,22 +19,21 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
  */
 public class VelocityGenerator {
 
-	VelocityEngine velocityEngine;
+	private VelocityEngine velocityEngine;
 	
 	/**
 	 * Constructor.
+	 * @throws IOException 
 	 */
-	public VelocityGenerator()
+	public VelocityGenerator() throws IOException
 	{
-    	// Properties to set 'src/main/resources' as Velocity template root folder
-    	Properties properties = new Properties();
-    	properties.setProperty(
-    			"file.resource.loader.class",
-    			"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-
-    	// Instantiate the engine
-    	velocityEngine = new VelocityEngine();
-    	velocityEngine.init(properties);
+		// Load properties file
+		Properties properties = new Properties();
+		properties.load(getClass().getClassLoader().getResourceAsStream(Config.VELOCITY_PROPERTIES));
+		
+		// Instantiate the engine
+		velocityEngine = new VelocityEngine();
+		velocityEngine.init(properties);
 	}
 	
 	/**
@@ -45,12 +44,14 @@ public class VelocityGenerator {
 	 */
 	public String generateService(UpnpService service)
 	{
-		Template template = velocityEngine
-				.getTemplate(Config.VELOCITY_TEMPLATE_FOLDER + File.separator + Config.VELOCITY_TEMPLATE_SERVICE);
+		// Retrieve the template
+		Template template = velocityEngine.getTemplate(Config.VELOCITY_TEMPLATE_SERVICE);
 		
+		// Data to fill the template with
 		VelocityContext context = new VelocityContext();
 		context.put("service", service);
 		
+		// Fill the template
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
 		
@@ -65,12 +66,14 @@ public class VelocityGenerator {
 	 */
 	public String generateServer(UpnpDevice device)
 	{
-		Template template = velocityEngine
-				.getTemplate(Config.VELOCITY_TEMPLATE_FOLDER + File.separator + Config.VELOCITY_TEMPLATE_SERVER);
-		
+		// Retrieve the template
+		Template template = velocityEngine.getTemplate(Config.VELOCITY_TEMPLATE_SERVER);
+
+		// Data to fill the template with
 		VelocityContext context = new VelocityContext();
 		context.put("device", device);
-		
+
+		// Fill the template
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
 
@@ -85,12 +88,14 @@ public class VelocityGenerator {
 	 */
 	public String generatePomXml(UpnpDevice device)
 	{
-		Template template = velocityEngine
-				.getTemplate(Config.VELOCITY_TEMPLATE_FOLDER + File.separator + Config.VELOCITY_TEMPLATE_POMXML);
-		
+		// Retrieve the template
+		Template template = velocityEngine.getTemplate(Config.VELOCITY_TEMPLATE_POMXML);
+
+		// Data to fill the template with
 		VelocityContext context = new VelocityContext();
 		context.put("device", device);
-		
+
+		// Fill the template
 		StringWriter writer = new StringWriter();
 		template.merge(context, writer);
 		

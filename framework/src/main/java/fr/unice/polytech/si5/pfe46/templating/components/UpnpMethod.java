@@ -1,6 +1,8 @@
 package fr.unice.polytech.si5.pfe46.templating.components;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
@@ -15,7 +17,7 @@ public class UpnpMethod {
 
 	private String name;
 	private String content;
-	private Set<UpnpStateVariable> inputs;
+	private LinkedHashSet<UpnpStateVariable> inputs; // LinkedHashSet because we need: - to keep the order - no duplicate.
 	private UpnpStateVariable output;
 	private Set<Class<? extends Exception>> exceptions;
 
@@ -41,7 +43,7 @@ public class UpnpMethod {
 	 * @param output Return of the method.
 	 * @param exceptions Exceptions that the method can throw.
 	 */
-	public UpnpMethod(String name, String content, Set<UpnpStateVariable> inputs, UpnpStateVariable output, Set<Class<? extends Exception>> exceptions)
+	public UpnpMethod(String name, String content, LinkedHashSet<UpnpStateVariable> inputs, UpnpStateVariable output, Set<Class<? extends Exception>> exceptions)
 	{
 		this();
 		this.name = name;
@@ -151,20 +153,30 @@ public class UpnpMethod {
 	{
 		if (name.equals(other.name))
 		{
+			// Same name with no parameters: same signature
 			if (!hasInputs() && !other.hasInputs())
 			{
 				return true;
 			}
 			
-			for (UpnpStateVariable variable : inputs)
+			// Same name but a different number of parameters: different signature
+			if (inputs.size() != other.inputs.size())
 			{
-				for (UpnpStateVariable otherVariable : other.inputs)
+				return false;
+			}
+			
+			// Look at the parameters and their order.
+			// Order is important since "void method(int, boolean)" and "void method(boolean, int)"
+			// have two different signatures.
+			List<UpnpStateVariable> thisInputs = new ArrayList<UpnpStateVariable>(inputs);
+			List<UpnpStateVariable> otherInputs = new ArrayList<UpnpStateVariable>(other.inputs);
+			
+			for (int i = 0; i < inputs.size(); i++)
+			{
+				if (thisInputs.get(i).getName().equals(otherInputs.get(i).getName())
+						&& thisInputs.get(i).getDatatype().equals(otherInputs.get(i).getDatatype()))
 				{
-					if (variable.getName().equals(otherVariable.getName())
-							&& variable.getDatatype().equals(otherVariable.getDatatype()))
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}
@@ -206,14 +218,14 @@ public class UpnpMethod {
 	/**
 	 * @return the inputs
 	 */
-	public Set<UpnpStateVariable> getInputs() {
+	public LinkedHashSet<UpnpStateVariable> getInputs() {
 		return inputs;
 	}
 
 	/**
 	 * @param inputs the inputs to set
 	 */
-	public void setInputs(Set<UpnpStateVariable> inputs) {
+	public void setInputs(LinkedHashSet<UpnpStateVariable> inputs) {
 		this.inputs = inputs;
 	}
 
