@@ -15,6 +15,11 @@ public class Resource {
         initFromJson(jsonObject);
     }
 
+    public Resource(String response) {
+        JSONObject jsonObject = new JSONObject(response);
+        initFromJson(jsonObject);
+    }
+
     public Resource(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
@@ -39,7 +44,7 @@ public class Resource {
                 JSONArray array = (JSONArray) value;
                 List<Resource> ress = new ArrayList<Resource>();
 
-                for (int i = 0 ; i < array.length() ; i++) {
+                for (int i = 0; i < array.length(); i++) {
                     ress.add(new Resource(array.getJSONObject(i)));
                 }
                 this.addAttribute(key, ress);
@@ -64,9 +69,12 @@ public class Resource {
         this.attributes.put(key, value);
     }
 
+    public Object getAttribute(String key) {
+        return this.attributes.get(key);
+    }
+
     public String toString() {
 
-        //return this.attributes.toString();
         String res = "";
 
         for (Map.Entry<String, Object> e : this.attributes.entrySet()) {
