@@ -20,6 +20,9 @@ public class UpnpDevice {
 	// CONSTRUCTOR
 	//
 	
+	/**
+	 * Default constructor.
+	 */
 	public UpnpDevice()
 	{
 		services = new LinkedHashSet<UpnpService>();
@@ -29,6 +32,11 @@ public class UpnpDevice {
 	// METHOD
 	//
 	
+	/**
+	 * Add a service to this device.
+	 * 
+	 * @param service Service to add.
+	 */
 	public void addService(UpnpService service)
 	{
 		this.services.add(service);
