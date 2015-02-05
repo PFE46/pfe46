@@ -1,4 +1,4 @@
-package fr.unice.polytech.si5.pfe46;
+package fr.unice.polytech.si5.pfe46.codesample.velocity;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
