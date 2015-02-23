@@ -1,4 +1,4 @@
-package fr.unice.polytech.si5.pfe46.Modules.OAuth.API;
+package fr.unice.polytech.si5.pfe46.modules.OAuth.API;
 
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.Token;

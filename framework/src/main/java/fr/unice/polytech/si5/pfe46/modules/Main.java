@@ -1,6 +1,7 @@
-package fr.unice.polytech.si5.pfe46.Modules;
+package fr.unice.polytech.si5.pfe46.modules;
 
-import fr.unice.polytech.si5.pfe46.Modules.OAuth.OAuthHandler;
+import fr.unice.polytech.si5.pfe46.modules.OAuth.OAuthHandler;
+import fr.unice.polytech.si5.pfe46.modules.OAuth.exceptions.NoSuchProviderException;
 
 import java.util.HashMap;
 
@@ -27,9 +28,15 @@ public class Main {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("userId", "5095987");
 
-        String res = OAuthHandler.getInstance().callWithingsService(uri, apiKey, apiSecret, accessToken, secretToken, params);
-
-        System.out.println(res);
+        try
+        {
+        	String res = OAuthHandler.getInstance().callServiceGet("Withings", uri, apiKey, apiSecret, accessToken, secretToken, params);
+        	System.out.println(res);
+        }
+        catch (NoSuchProviderException e)
+        {
+        	System.err.println(e);
+        }
 
     }
 

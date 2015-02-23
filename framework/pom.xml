@@ -115,6 +115,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>fr.unice.polytech.si5.pfe46.SampleMain</mainClass>
+                                    <!-- <mainClass>fr.unice.polytech.si5.pfe46.modules.Main</mainClass> -->
                                 </manifest>
                             </archive>
                         </configuration>

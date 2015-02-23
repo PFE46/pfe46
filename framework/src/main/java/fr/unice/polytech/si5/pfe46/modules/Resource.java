@@ -1,4 +1,4 @@
-package fr.unice.polytech.si5.pfe46.Modules;
+package fr.unice.polytech.si5.pfe46.modules;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
