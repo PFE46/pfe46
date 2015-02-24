@@ -116,6 +116,9 @@ public class InputParser {
 	{
 		// :'(
 		
+		// TODO: manage the case where the kind of the method does not match the kind of object,
+		// BluetoothMethodBinding with a WsRestObject for example
+		
 		for (Method method : input.getMethods())
 		{
 			for (MethodBinding methodBinding : method.getBindings())
