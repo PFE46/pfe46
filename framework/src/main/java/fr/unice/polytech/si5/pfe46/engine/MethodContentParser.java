@@ -6,10 +6,8 @@ import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestMethodBinding;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestVerb;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.ConnectedObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.util.*;
+import java.util.List;
 
 public class MethodContentParser {
 
@@ -27,7 +25,7 @@ public class MethodContentParser {
 
             ConnectedObject object = methodBinding.getConnectedObject();
 
-            res += "\nif (objectName == \"" + object.getName() + "\") {";
+            res += "\nif (objectName.equals(\"" + object.getName() + "\")) {";
 
             if (methodBinding instanceof WsRestMethodBinding) {
                 res += wsContent((WsRestMethodBinding) methodBinding);
@@ -53,7 +51,7 @@ public class MethodContentParser {
         res += "\n\tHashMap<String, String> params = JsonProcess.jsonToMap(parameters);";
 
         if (object.isUseOAuth()) {
-            res += "\n\tString res = OAuthHandler.getInstance();";
+            res += "\n\tString res = OAuthHandler.getInstance()";
 
             String provider = object.getProvider();
             String uri = methodBinding.getEndpoint();
@@ -73,7 +71,12 @@ public class MethodContentParser {
     }
 
     private String bluetoothContent(BluetoothMethodBinding methodBinding) {
-        return "";
+
+        String res = "";
+        res += "\n\tString res = \"\";";
+        res += "\n\treturn res;";
+
+        return res;
     }
 
 }
