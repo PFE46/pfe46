@@ -25,7 +25,7 @@ public class MethodContentParser {
 
             ConnectedObject object = methodBinding.getConnectedObject();
 
-            res += "\nif (objectName.equals(\"" + object.getName() + "\")) {";
+            res += "\n\tif (objectName.equals(\"" + object.getName() + "\")) {";
 
             if (methodBinding instanceof WsRestMethodBinding) {
                 res += wsContent((WsRestMethodBinding) methodBinding);
@@ -34,7 +34,7 @@ public class MethodContentParser {
                 res += bluetoothContent((BluetoothMethodBinding) methodBinding);
             }
 
-            res += "\n}";
+            res += "\n\t}";
 
         }
 
@@ -48,10 +48,10 @@ public class MethodContentParser {
 
         WsRestObject object = (WsRestObject) methodBinding.getConnectedObject();
 
-        res += "\n\tHashMap<String, String> params = JsonProcess.jsonToMap(parameters);";
+        res += "\n\t\tHashMap<String, String> params = JsonProcess.jsonToMap(parameters);";
 
         if (object.isUseOAuth()) {
-            res += "\n\tString res = OAuthHandler.getInstance()";
+            res += "\n\t\tString res = OAuthHandler.getInstance()";
 
             String provider = object.getProvider();
             String uri = methodBinding.getEndpoint();
@@ -60,11 +60,11 @@ public class MethodContentParser {
         }
         else {
             if (methodBinding.getVerb() == WsRestVerb.GET) {
-                res += "\n\tString res = WSHandler.getInstance().get(uri);";
+                res += "\n\t\tString res = WSHandler.getInstance().get(uri);";
             }
         }
 
-        res += "\n\treturn res;";
+        res += "\n\t\treturn res;";
 
         return res;
 
@@ -73,8 +73,8 @@ public class MethodContentParser {
     private String bluetoothContent(BluetoothMethodBinding methodBinding) {
 
         String res = "";
-        res += "\n\tString res = \"\";";
-        res += "\n\treturn res;";
+        res += "\n\t\tString res = \"\";";
+        res += "\n\t\treturn res;";
 
         return res;
     }
