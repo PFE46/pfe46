@@ -1,5 +1,6 @@
 package fr.unice.polytech.si5.pfe46.modules;
 
+import fr.unice.polytech.si5.pfe46.engine.MethodContentParser;
 import fr.unice.polytech.si5.pfe46.modules.OAuth.OAuthHandler;
 import fr.unice.polytech.si5.pfe46.modules.OAuth.exceptions.NoSuchProviderException;
 
@@ -37,6 +38,10 @@ public class Main {
         {
         	System.err.println(e);
         }
+
+        /* Method Content Parser */
+        String res = MethodContentParser.getInstance().buildContent();
+        System.out.println(res);
 
     }
 

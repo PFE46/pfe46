@@ -18,21 +18,21 @@ public class WSHandler {
         return INSTANCE;
     }
 
-    public JSONObject get(String uri) {
+    public String get(String uri) {
 
         String result = restTemplate.getForObject(uri, String.class);
-        JSONObject response = new JSONObject(result);
+        //JSONObject response = new JSONObject(result);
 
-        return response;
+        return result;
 
     }
 
-    public JSONObject get(String uri, HashMap<String, String> params) {
+    public String get(String uri, HashMap<String, String> params) {
 
         String result = restTemplate.getForObject(uri, String.class, params);
-        JSONObject response = new JSONObject(result);
+        //JSONObject response = new JSONObject(result);
 
-        return response;
+        return result;
 
     }
 
