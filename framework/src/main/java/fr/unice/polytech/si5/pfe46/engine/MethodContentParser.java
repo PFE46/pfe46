@@ -9,10 +9,7 @@ import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MethodContentParser {
 
@@ -30,7 +27,7 @@ public class MethodContentParser {
 
             ConnectedObject object = methodBinding.getConnectedObject();
 
-            res += "\nif (objectName == " + object.getName() + ") {";
+            res += "\nif (objectName == \"" + object.getName() + "\") {";
 
             if (methodBinding instanceof WsRestMethodBinding) {
                 res += wsContent((WsRestMethodBinding) methodBinding);
@@ -53,8 +50,10 @@ public class MethodContentParser {
 
         WsRestObject object = (WsRestObject) methodBinding.getConnectedObject();
 
+        res += "\n\tHashMap<String, String> params = JsonProcess.jsonToMap(parameters);";
+
         if (object.isUseOAuth()) {
-            res += "\n\tString res = OAuthHandler.getInstance()";
+            res += "\n\tString res = OAuthHandler.getInstance();";
 
             String provider = object.getProvider();
             String uri = methodBinding.getEndpoint();
@@ -71,27 +70,6 @@ public class MethodContentParser {
 
         return res;
 
-    }
-
-    private String processWSRestParams(String parameters) {
-
-        JSONObject params = new JSONObject(parameters);
-
-        String res = "Number of parameters : " + params.length();
-
-        Set keys = params.keySet();
-        Iterator it = keys.iterator();
-
-        while (it.hasNext()) {
-
-            String key = (String) it.next();
-            Object value = params.get(key);
-
-
-
-        }
-
-        return res;
     }
 
     private String bluetoothContent(BluetoothMethodBinding methodBinding) {
