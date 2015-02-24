@@ -77,6 +77,11 @@
             <artifactId>scribe</artifactId>
             <version>1.3.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -114,8 +119,10 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>fr.unice.polytech.si5.pfe46.SampleMain</mainClass>
+                                    <!-- <mainClass>fr.unice.polytech.si5.pfe46.SampleMain</mainClass> -->
                                     <!-- <mainClass>fr.unice.polytech.si5.pfe46.modules.Main</mainClass> -->
+                                    <!-- <mainClass>fr.unice.polytech.si5.pfe46.engine.InputParser</mainClass> -->
+                                    <mainClass>fr.unice.polytech.si5.pfe46.engine.Main</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
