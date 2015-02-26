@@ -35,7 +35,7 @@ public class MethodContentParser{
         {
             ConnectedObject object = methodBinding.getConnectedObject();
 
-            res.append("\nif (objectName.equals(\"");
+            res.append("\n\tif (objectName.equals(\"");
             res.append(object.getName() + "\")) {");
 
             if (methodBinding instanceof WsRestMethodBinding)
@@ -47,7 +47,7 @@ public class MethodContentParser{
             	res.append(bluetoothContent((BluetoothMethodBinding) methodBinding));
             }
 
-            res.append("\n}");
+            res.append("\n\t}");
         }
         res.append("return \"{\\\"error\\\":\\\"true\\\"}\";");
 
@@ -60,11 +60,11 @@ public class MethodContentParser{
 
         WsRestObject object = (WsRestObject) methodBinding.getConnectedObject();
 
-        res.append("\n\tMap<String, String> params = JsonProcess.jsonToMap(parameters);");
+        res.append("\n\t\tMap<String, String> params = JsonProcess.jsonToMap(parameters);");
 
         if (object.isUseOAuth())
         {
-        	res.append("\n\tString res = OAuthHandler.getInstance()");
+        	res.append("\n\t\tString res = OAuthHandler.getInstance()");
 
             String provider = object.getProvider();
             String uri = methodBinding.getEndpoint();
@@ -79,21 +79,20 @@ public class MethodContentParser{
         {
             if (methodBinding.getVerb() == WsRestVerb.GET)
             {
-                res.append("\n\tString res = WSHandler.getInstance().get(uri);");
+                res.append("\n\t\tString res = WSHandler.getInstance().get(uri);");
             }
         }
 
-        res.append("\n\treturn res;");
+        res.append("\n\t\treturn res;");
 
         return res.toString();
-
     }
 
     private String bluetoothContent(BluetoothMethodBinding methodBinding)
     {
     	StringBuilder res = new StringBuilder();
-        res.append("\n\tString res = \"\";");
-        res.append("\n\treturn res;");
+        res.append("\n\t\tString res = \"\";");
+        res.append("\n\t\treturn res;");
 
         return res.toString();
     }

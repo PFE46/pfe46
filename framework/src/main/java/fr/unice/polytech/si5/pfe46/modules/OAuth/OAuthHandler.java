@@ -28,21 +28,21 @@ public class OAuthHandler {
 	}
 
 	public String callServiceGet(String provider, String uri, String apiKey, String apiSecret,
-								 String accessToken, String secretToken, HashMap<String, String> params)
+								 String accessToken, String secretToken, Map<String, String> params)
 								 throws NoSuchProviderException
 	{
 		return callService(provider, uri, Verb.GET, apiKey, apiSecret, accessToken, secretToken, params);
 	}
 
 	public String callServicePost(String provider, String uri, String apiKey, String apiSecret,
-								  String accessToken, String secretToken, HashMap<String, String> params)
+								  String accessToken, String secretToken, Map<String, String> params)
 								  throws NoSuchProviderException
 	{
 		return callService(provider, uri, Verb.POST, apiKey, apiSecret, accessToken, secretToken, params);
 	}
 
 	private String callService(String provider, String uri, Verb verb, String apiKey, String apiSecret,
-							   String accessToken, String secretToken, HashMap<String, String> params)
+							   String accessToken, String secretToken, Map<String, String> params)
 							   throws NoSuchProviderException
 	{
 		Class<? extends DefaultApi10a> serviceProvider;
