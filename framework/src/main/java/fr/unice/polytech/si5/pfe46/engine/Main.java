@@ -1,14 +1,12 @@
 package fr.unice.polytech.si5.pfe46.engine;
 
+import java.io.IOException;
+
 import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.BluetoothMethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.Method;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.MethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestMethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.BluetoothObject;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.ConnectedObject;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
+import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
+import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
+import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
 
 public class Main {
 
@@ -18,7 +16,7 @@ public class Main {
 				+ "\"wiiboardid\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
 				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
 				+ "\":[{\"object\":\"WiiBoard\",\"bluetoothMethod\":\"getWiiBoardWeightAddress\"},{"
-				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"/api/measures\",\"verb\":\"GET\"}]}]}";
+				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas\",\"verb\":\"GET\"}]}]}";
 
 		/*
 		 *   {
@@ -45,7 +43,7 @@ public class Main {
 		 *                   },
 		 *                   {
 		 *                       "object": "SmartBodyAnalyzer",
-		 *                       "endpoint": "/api/measures",
+		 *                       "endpoint": "https://wbsapi.withings.net/measure?action=getmeas",
 		 *                       "verb": "GET"
 		 *                   }
 		 *               ]
@@ -54,21 +52,24 @@ public class Main {
 		 *   }
 		 */
 
-		//
-		// Parsing.
-		//
-
-		Input input = null;
-
 		try
 		{
-			input = InputParser.getInstance().parse(json);
+			// Parsing
+			Input input = InputParser.getInstance().parse(json);
+			
+			// Generate UpnpDevice
+			UpnpDevice upnpDevice = InputToUpnpDevice.getInstance().getDevice(input);
+			
+			// Generate Maven project
+			MavenProjectGenerator.getInstance().generateMavenProject(upnpDevice);
 		}
-		catch (JsonParsingException e)
+		catch (JsonParsingException | IOException
+				| UpnpStateVariableConflictException | DuplicateMethodSignatureException e)
 		{
-			System.err.println(e);
+			e.printStackTrace();
 		}
-
+		
+/*
 		//
 		// Println.
 		//
@@ -114,7 +115,7 @@ public class Main {
 				}
 			}
 			System.out.println();
-		}
+		}*/
 	}
 
 }

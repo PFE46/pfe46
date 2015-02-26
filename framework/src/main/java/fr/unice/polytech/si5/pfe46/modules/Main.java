@@ -1,18 +1,13 @@
 package fr.unice.polytech.si5.pfe46.modules;
 
+import java.util.List;
+
 import fr.unice.polytech.si5.pfe46.engine.InputParser;
 import fr.unice.polytech.si5.pfe46.engine.MethodContentParser;
 import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.Method;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.MethodBinding;
-import fr.unice.polytech.si5.pfe46.utils.JsonProcess;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class Main {
 
@@ -66,15 +61,14 @@ public class Main {
             System.err.println(e);
         }
 
-        if (input != null) {
-
-            for (Method method : input.getMethods()) {
-
+        if (input != null)
+        {
+            for (Method method : input.getMethods())
+            {
                 List<MethodBinding> binding = method.getBindings();
 
                 String res = MethodContentParser.getInstance().buildContent(binding);
                 System.out.println(res);
-
             }
 
         }

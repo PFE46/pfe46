@@ -1,4 +1,4 @@
-package fr.unice.polytech.si5.pfe46.templating.engine;
+package fr.unice.polytech.si5.pfe46.templating;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -17,15 +17,33 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
  * 
  * @author victorsalle
  */
-public class VelocityGenerator {
+public class VelocityCodeGenerator {
 
+	private static VelocityCodeGenerator INSTANCE;
 	private VelocityEngine velocityEngine;
 	
 	/**
-	 * Constructor.
+	 * Singleton accessor.
+	 * 
+	 * @return VelocityGenerator instance.
 	 * @throws IOException 
 	 */
-	public VelocityGenerator() throws IOException
+	public static VelocityCodeGenerator getIntance() throws IOException
+	{
+		if (INSTANCE == null)
+		{
+			INSTANCE = new VelocityCodeGenerator();
+		}
+		return INSTANCE;
+	}
+	
+	
+	/**
+	 * Private constructor (singleton).
+	 * 
+	 * @throws IOException 
+	 */
+	private VelocityCodeGenerator() throws IOException
 	{
 		// Load properties file
 		Properties properties = new Properties();

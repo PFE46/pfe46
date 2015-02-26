@@ -37,9 +37,18 @@ public class InputParser {
 	private static InputParser INSTANCE;
 	private static ObjectMapper mapper;
 	
-	// Used to differentiate polymorphic types in the input string
-	private static final String BLUETOOTH_OBJECT_PROPERTY 		  = "deviceId";
-	private static final String WS_REST_OBJECT_PROPERTY 		  = "useOAuth";
+	/* 
+	 * Used to differentiate polymorphic types in the input string.
+	 *
+	 * Those attributes must appear only in the given type among those which are going to be
+	 * deserialized ("deviceId" only appears in "BluetoothObject" class, not on the others).
+	 *
+	 * This is required to be sure that a JSON that contains an attribute "deviceId" will be
+	 * deserialized using the "BluetoothObject" class.
+	 * 
+	 */
+	private static final String BLUETOOTH_OBJECT_PROPERTY         = "deviceId";
+	private static final String WS_REST_OBJECT_PROPERTY           = "useOAuth";
 	private static final String BLUETOOTH_METHOD_BINDING_PROPERTY = "bluetoothMethod";
 	private static final String WS_REST_METHOD_BINDING_PROPERTY   = "endpoint";
 	
@@ -58,7 +67,7 @@ public class InputParser {
 	}
 	
 	/**
-	 * Constructor.
+	 * Private constructor (singleton).
 	 */
 	private InputParser()
 	{
@@ -72,7 +81,7 @@ public class InputParser {
 		methodBindingDeserializer.register(BLUETOOTH_METHOD_BINDING_PROPERTY, BluetoothMethodBinding.class);
 		methodBindingDeserializer.register(WS_REST_METHOD_BINDING_PROPERTY, WsRestMethodBinding.class);
 
-		// Needed to use deserializer above
+		// Needed to use deserializers above
 		SimpleModule module = new SimpleModule("InputDeserializer", new Version(1, 0, 0, null));
 		module.addDeserializer(ConnectedObject.class, connectedObjectDeserializer);
 		module.addDeserializer(MethodBinding.class, methodBindingDeserializer);
@@ -139,17 +148,19 @@ public class InputParser {
 
 /**
  * Deserializer considering polymorphism. 
+ * http://programmerbruce.blogspot.fr/2011/05/deserialize-json-with-jackson-into.html (visited Feb. 24, 2015)
  * 
  * @author programmerbruce (programmerbruce.blogspot.fr)
  */
 @SuppressWarnings("deprecation")
 class MyDeserializer<T> extends StdDeserializer<T>
 {
-	private Map<String, Class<? extends T>> registry = new HashMap<String, Class<? extends T>>();
+	private Map<String, Class<? extends T>> registry;
 
 	MyDeserializer(Class<T> t)
 	{
 		super(t);
+		registry = new HashMap<String, Class<? extends T>>();
 	}
 
 	void register(String uniqueAttribute, Class<? extends T> myClass)

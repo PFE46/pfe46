@@ -47,7 +47,7 @@
                       </descriptorRefs>
                       <archive>
                           <manifest>
-                              <mainClass>fr.unice.polytech.si5.pfe46.generated.${device.deviceName}Server</mainClass>
+                              <mainClass>fr.unice.polytech.pfe46.generated.${device.deviceName}Server</mainClass>
                           </manifest>
                       </archive>
                   </configuration>
@@ -79,5 +79,17 @@
         <artifactId>json</artifactId>
         <version>20141113</version>
     </dependency>
+    
+    <!-- TODO -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+		<version>4.1.4.RELEASE</version>
+	</dependency>
+	<dependency>
+		<groupId>org.scribe</groupId>
+		<artifactId>scribe</artifactId>
+		<version>1.3.7</version>
+	</dependency>
   </dependencies>
 </project>

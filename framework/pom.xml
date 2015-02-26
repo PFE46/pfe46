@@ -5,7 +5,7 @@
     <groupId>fr.unice.polytech.si5.pfe46</groupId>
     <artifactId>framework</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 
     <name>framework</name>
     <url>http://maven.apache.org</url>
@@ -82,6 +82,11 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
+        <dependency>
+        	<groupId>commons-io</groupId>
+        	<artifactId>commons-io</artifactId>
+        	<version>2.4</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -128,11 +133,27 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+			</plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+			</plugin>
+			<!-- Copy each module in resources directory -->
+			<plugin>
+			    <groupId>org.codehaus.gmaven</groupId>
+			    <artifactId>gmaven-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <phase>generate-resources</phase>
+			            <goals>
+			                <goal>execute</goal>
+			            </goals>
+			            <configuration>
+			                <source>${basedir}/src/main/resources/scripts/copy_modules.groovy</source>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
         </plugins>
     </build>
 

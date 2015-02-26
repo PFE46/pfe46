@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.unice.polytech.si5.pfe46.engine.MavenProjectGenerator;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpMethod;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariable;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariableType;
-import fr.unice.polytech.si5.pfe46.templating.engine.MavenProjectGenerator;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
 
@@ -110,7 +110,7 @@ public class SampleMain
          * 
          ******************/
         
-        MavenProjectGenerator g = new MavenProjectGenerator();
+        MavenProjectGenerator g = MavenProjectGenerator.getInstance();
         try {
         	g.generateMavenProject(device);
         } catch (Exception e)

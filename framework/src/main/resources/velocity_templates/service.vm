@@ -1,13 +1,20 @@
-package fr.unice.polytech.si5.pfe46.generated;
+package fr.unice.polytech.pfe46.generated;
 
-import org.apache.commons.io.IOUtils;
 import org.fourthline.cling.binding.annotations.*;
-import org.json.JSONObject;
+import java.util.Map;
+import java.util.HashMap;
 
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
+import fr.unice.polytech.si5.pfe46.modules.JsonProcess;
+import fr.unice.polytech.si5.pfe46.modules.WSHandler;
+import fr.unice.polytech.si5.pfe46.modules.OAuth.OAuthHandler;
+import fr.unice.polytech.si5.pfe46.modules.OAuth.API.WithingsApi;
+import fr.unice.polytech.si5.pfe46.modules.OAuth.exceptions.NoSuchProviderException;
 
+/**
+ * Auto-generated code.
+ * 
+ * PFE46, SI5 - Polytech Nice Sophia, France
+ */
 @UpnpService(serviceId = @UpnpServiceId("$service.name"),
             serviceType = @UpnpServiceType(value = "$service.name", version = 1))
 @UpnpStateVariables(
