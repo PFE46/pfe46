@@ -3,6 +3,10 @@ var	margin = {top: 30, right: 40, bottom: 100, left: 50},
 	height = 400 - margin.top - margin.bottom;
 
 var	parseDate = d3.time.format("%H-%d-%b-%y").parse;
+		var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth();
+	var yyyy = today.getFullYear();
 
 var	x = d3.time.scale().range([0, width]);
 var	y0 = d3.scale.linear().range([height, 0]);
@@ -172,8 +176,11 @@ d3.json("dataj1.json", function(json) {
 			d.moyenne = +d.moyenne;
 	    });
 		//A modifier dynamiquement
-		 var mindate = new Date(2012,3,7,0),
-			maxdate = new Date(2012,3,7,23); 
+		/*var mindate = new Date(yyyy,mm,dd,0),
+		maxdate = new Date(yyyy,mmn,dd,23);*/
+
+		 var mindate = new Date(yyyy,mm,dd,0),
+		 maxdate = new Date(yyyy,mm,dd,23);
 
     	// Scale the range of the data again 
     	x.domain([mindate,maxdate]).clamp(true);
@@ -225,8 +232,10 @@ d3.json("dataj1.json", function(json) {
 			d.moyenne = +d.moyenne;
 	    });
 		//A modifier dynamiquement
-		 var mindate = new Date(2012,3,7,0),
-			maxdate = new Date(2012,3,15,23); 
+		 /*var mindate = new Date(2012,3,7,0),
+		 maxdate = new Date(2012,3,15,23); */
+		 var mindate = new Date(yyyy,mm,20,0),
+		 maxdate = new Date(yyyy,mm,27,23);
 
     	// Scale the range of the data again 
     	x.domain([mindate,maxdate]).clamp(true);
@@ -278,8 +287,9 @@ d3.json("dataj1.json", function(json) {
 			d.moyenne = +d.moyenne;
 	    });
 		//A modifier dynamiquement
-		 var mindate = new Date(2012,3,7),
-			maxdate = new Date(2012,4,7); 
+		var previousMonth = mm - 1;
+		 var mindate = new Date(yyyy,previousMonth,dd),
+			maxdate = new Date(yyyy,mm,dd); 
 
     	// Scale the range of the data again 
     	x.domain([mindate,maxdate]).clamp(true);
