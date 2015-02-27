@@ -16,7 +16,7 @@ public class Main {
 				+ "\"wiiboardid\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
 				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
 				+ "\":[{\"object\":\"WiiBoard\",\"bluetoothMethod\":\"getWiiBoardWeightAddress\"},{"
-				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas\",\"verb\":\"GET\"}]}]}";
+				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
 
 		/*
 		 *   {
