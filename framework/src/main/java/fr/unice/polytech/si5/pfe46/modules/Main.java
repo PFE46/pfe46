@@ -51,7 +51,7 @@ public class Main {
         String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
                 + "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
                 + "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
-                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"getWiiBoardWeightAddress();\", \"imports\": [\"ImportClass\"]},{"
+                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"//getWiiBoardWeightAddress();\", \"imports\": [\"ImportClass\"]},{"
                 + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
 
         Input input = null;
