@@ -38,17 +38,8 @@ var	svg = d3.select("body")
 	.append("g")
 		.attr("transform", 
 		      "translate(" + margin.left + "," + margin.top + ")");
-/*var data = [
-{"date":"9-Apr-12","poids1":50,"poids2":48,"moyenne":49},
-{"date":"7-Apr-12","poids1":51,"poids2":50,"moyenne":50.5},
-{"date":"5-Apr-12","poids1":50,"poids2":47,"moyenne":48.5},
-{"date":"4-Apr-12","poids1":52,"poids2":52,"moyenne":52},
-{"date":"3-Apr-12","poids1":55,"poids2":53,"moyenne":54},
-{"date":"2-Apr-12","poids1":54,"poids2":53,"moyenne":53.5}
-];*/
 
 // Get the data
-//data.forEach(function(d) {
 
 var data;
 var data2;
@@ -154,14 +145,33 @@ function showMoy(){
 	
  function rescaleDay() {
 parseDate = d3.time.format("%H-%d-%b-%y").parse;
-d3.csv("data.csv", function(error, data) {
+
+d3.json("dataj2.json", function(json) {
+	data2 = json;
+});
+
+d3.json("dataj3.json", function(json) {
+	dataMoy = json;
+});
+
+d3.json("dataj1.json", function(json) {
+  data = json;
+
        	data.forEach(function(d) {
 	    	d.date = parseDate(d.date);
 	    	d.poids1 = +d.poids1;
+	    });
+		
+		data2.forEach(function(d) {
+	    	d.date = parseDate(d.date);
 			d.poids2 = +d.poids2;
 			d.moyenne = +d.moyenne;
 	    });
-		
+		dataMoy.forEach(function(d) {
+	    	d.date = parseDate(d.date);
+			d.moyenne = +d.moyenne;
+	    });
+		//A modifier dynamiquement
 		 var mindate = new Date(2012,3,7,0),
 			maxdate = new Date(2012,3,7,23); 
 
@@ -178,27 +188,43 @@ d3.csv("data.csv", function(error, data) {
             .attr("d", valueline(data));
 		svg.select("#greenLine")   // change the line
             .duration(750)
-            .attr("d", valueline2(data));
+            .attr("d", valueline2(data2));
 		svg.select("#redLine")   // change the line
             .duration(750)
-            .attr("d", valueline3(data));
+            .attr("d", valueline3(dataMoy));
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
-
-    });}
+	
+	});}
 	
 	
 function rescaleWeek() {
 parseDate = d3.time.format("%H-%d-%b-%y").parse;
-d3.csv("data.csv", function(error, data) {
+d3.json("dataj2.json", function(json) {
+	data2 = json;
+	});
+
+d3.json("dataj3.json", function(json) {
+	dataMoy = json;
+});
+
+d3.json("dataj1.json", function(json) {
+  data = json;
+
        	data.forEach(function(d) {
 	    	d.date = parseDate(d.date);
 	    	d.poids1 = +d.poids1;
+	    });
+		data2.forEach(function(d) {
+			d.date = parseDate(d.date);
 			d.poids2 = +d.poids2;
+	    });
+		dataMoy.forEach(function(d) {
+	    	d.date = parseDate(d.date);
 			d.moyenne = +d.moyenne;
 	    });
-		
+		//A modifier dynamiquement
 		 var mindate = new Date(2012,3,7,0),
 			maxdate = new Date(2012,3,15,23); 
 
@@ -215,30 +241,43 @@ d3.csv("data.csv", function(error, data) {
             .attr("d", valueline(data));
 		svg.select("#greenLine")   // change the line
             .duration(750)
-            .attr("d", valueline2(data));
+            .attr("d", valueline2(data2));
 		svg.select("#redLine")   // change the line
             .duration(750)
-            .attr("d", valueline3(data));
+            .attr("d", valueline3(dataMoy));
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
-        /*svg.select(".y.axis") // change the y axis
-            .duration(750)
-		.call(yAxis);*/
 
     });
 } 
 
 function rescaleMonth() {
 parseDate = d3.time.format("%H-%d-%b-%y").parse;
-d3.csv("data.csv", function(error, data) {
+d3.json("dataj2.json", function(json) {
+	data2 = json;
+	});
+
+d3.json("dataj3.json", function(json) {
+	dataMoy = json;
+});
+
+d3.json("dataj1.json", function(json) {
+  data = json;
+
        	data.forEach(function(d) {
 	    	d.date = parseDate(d.date);
 	    	d.poids1 = +d.poids1;
+	    });
+		data2.forEach(function(d) {
+			d.date = parseDate(d.date);
 			d.poids2 = +d.poids2;
+	    });
+		dataMoy.forEach(function(d) {
+	    	d.date = parseDate(d.date);
 			d.moyenne = +d.moyenne;
 	    });
-		
+		//A modifier dynamiquement
 		 var mindate = new Date(2012,3,7),
 			maxdate = new Date(2012,4,7); 
 
@@ -255,10 +294,10 @@ d3.csv("data.csv", function(error, data) {
             .attr("d", valueline(data));
 		svg.select("#greenLine")   // change the line
             .duration(750)
-            .attr("d", valueline2(data));
+            .attr("d", valueline2(data2));
 		svg.select("#redLine")   // change the line
             .duration(750)
-            .attr("d", valueline3(data));
+            .attr("d", valueline3(dataMoy));
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
