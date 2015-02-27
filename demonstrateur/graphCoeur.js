@@ -47,7 +47,7 @@ d3.json("dataCoeur.json", function(json) {
 function visualizeit(){
 	data.forEach(function(d) {
 	d.date = parseDate(d.date);
-	d.frequence = +d.frequence
+	d.frequence = +d.frequence;
 		});
 	
 // Scale the range of the data
