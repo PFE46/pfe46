@@ -4,9 +4,9 @@ public class JsonParsingException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
-	public JsonParsingException(String json)
+	public JsonParsingException(Exception e)
 	{
-		super("JsonParsingException: " + json);
+		super("JsonParsingException: " + e.getMessage());
 	}
 
 }

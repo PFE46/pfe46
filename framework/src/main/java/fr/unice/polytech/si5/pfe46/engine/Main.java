@@ -16,8 +16,7 @@ public class Main {
                 + "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
                 + "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
                 + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"getWiiBoardWeightAddress();\", \"imports\": [\"ImportClass\"]},{"
-                + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
-
+                + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\",:\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
 
 		/*
 		 *   {

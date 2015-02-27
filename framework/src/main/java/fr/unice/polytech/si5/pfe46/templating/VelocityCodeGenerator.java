@@ -2,6 +2,7 @@ package fr.unice.polytech.si5.pfe46.templating;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.velocity.Template;
@@ -9,6 +10,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import fr.unice.polytech.si5.pfe46.Config;
+import fr.unice.polytech.si5.pfe46.templating.components.MavenDependency;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 
@@ -102,9 +104,10 @@ public class VelocityCodeGenerator {
 	 * Generate Pom.XML for the Maven project.
 	 * 
 	 * @param device Device.
+	 * @param dependencies List of Maven dependencies.
 	 * @return Generated code.
 	 */
-	public String generatePomXml(UpnpDevice device)
+	public String generatePomXml(UpnpDevice device, List<MavenDependency> dependencies)
 	{
 		// Retrieve the template
 		Template template = velocityEngine.getTemplate(Config.VELOCITY_TEMPLATE_POMXML);
@@ -112,6 +115,7 @@ public class VelocityCodeGenerator {
 		// Data to fill the template with
 		VelocityContext context = new VelocityContext();
 		context.put("device", device);
+		context.put("dependencies", dependencies);
 
 		// Fill the template
 		StringWriter writer = new StringWriter();

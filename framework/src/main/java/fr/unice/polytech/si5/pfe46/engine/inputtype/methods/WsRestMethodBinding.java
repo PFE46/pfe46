@@ -4,7 +4,11 @@ public class WsRestMethodBinding extends MethodBinding {
 
 	private String endpoint;
 	private WsRestVerb verb;
-	
+
+	public enum WsRestVerb {
+		GET, POST, PUT;
+	}
+
 	public String getEndpoint() { return endpoint; }
 	public void setEndpoint(String endpoint) { this.endpoint = endpoint; }
 	

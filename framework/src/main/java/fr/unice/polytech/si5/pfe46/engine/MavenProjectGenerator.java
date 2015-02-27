@@ -5,13 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.FileUtils;
-
 import fr.unice.polytech.si5.pfe46.Config;
 import fr.unice.polytech.si5.pfe46.templating.VelocityCodeGenerator;
+import fr.unice.polytech.si5.pfe46.templating.components.MavenDependency;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 
@@ -77,7 +78,8 @@ public class MavenProjectGenerator {
 			createZipEntry(out, MAVEN_STRUCTURE_JAVA + device.getDeviceName() + "Server.java", serverCode);
 			
 			// Generate pom.xml
-			String pomXmlCode = VelocityCodeGenerator.getIntance().generatePomXml(device);
+			List<MavenDependency> dependencies = new ArrayList<>(); // TODO
+			String pomXmlCode = VelocityCodeGenerator.getIntance().generatePomXml(device, dependencies);
 			createZipEntry(out, MAVEN_POM_XML, pomXmlCode);
 			
 			// Add modules
@@ -142,6 +144,7 @@ public class MavenProjectGenerator {
 			// equivalent to the Maven file structure to embed in the zip file
 			String[] fileName = file.getAbsolutePath().split("framework")[1].split("fr/unice/polytech/si5/pfe46/");
 			ZipEntry entry = new ZipEntry(fileName[0] + fileName[1]);
+			
 			entry.setMethod(ZipEntry.DEFLATED);
 			out.putNextEntry(entry);
 			out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
