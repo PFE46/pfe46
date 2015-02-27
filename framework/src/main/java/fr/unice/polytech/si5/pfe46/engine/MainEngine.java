@@ -8,16 +8,15 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
 
-public class Main {
+public class MainEngine {
 
 	public static void main(String[] args)
 	{
         String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
                 + "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
                 + "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
-                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"//getWiiBoardWeightAddress();\", \"imports\": [\"ImportClass\"]},{"
+                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();\", \"imports\": [\"ImportClass\"]},{"
                 + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
-
 
 		/*
 		 *   {
