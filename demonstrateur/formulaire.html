@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulaire</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+	<div class="container">
+		<br>
+	<div class="row clearfix">
+		<div class="col-md-4 column">
+				<form>
+  <div class="form-group">
+    <label for="inputName">Nom de l'objet</label>
+    <input type="name" class="form-control" id="exampleInputEmail1" placeholder="Entrez le nom de votre objet">
+  </div>
+  <div class="form-group" id="formID">
+    <label for="inputId">ID de l'objet</label>
+    <input type="name" class="form-control" id="exampleInputPassword1" placeholder="Entrez l'id de votre objet">
+  </div>
+  <div class="form-group">
+	  <div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
+    Bluetooth
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+    Webservice
+  </label>
+</div>
+<div id="formSupp" style="display : none">
+	<div class="form-group"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadiosAuth1" value="option1" >
+    OAuth
+  </label>
+</div>
+<div id="formSupp3" style="display : none"><select class="form-control">
+  <option>Withings</option>
+  <option>Marque</option>
+</select></div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadiosAuth2" value="option2">
+    Autre
+  </label>
+</div></div></div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" >
+    Librairie
+  </label>
+</div>
+<div id="formSupp2" style="display : none">
+	  <div class="form-group">
+    <label for="exampleInputFile">Ins&eacute;rez votre fichier</label>
+    <input type="file" id="exampleInputFile">
+  </div></div>
+	  </div>
+  <div class="form-group">
+	  <textarea class="form-control" rows="3"></textarea></div>
+  <button type="submit" class="btn btn-default">Envoyer</button>
+</form>
+
+		</div></div></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	<script src="form.js"></script>
+  </body>
+</html>
