@@ -2,10 +2,7 @@ package fr.unice.polytech.si5.pfe46.engine;
 
 import java.util.List;
 
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.BluetoothMethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.MethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestMethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestVerb;
+import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.*;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.ConnectedObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
 
@@ -45,6 +42,10 @@ public class MethodContentParser{
             else if (methodBinding instanceof BluetoothMethodBinding)
             {
             	res.append(bluetoothContent((BluetoothMethodBinding) methodBinding));
+            }
+            else if (methodBinding instanceof LibraryMethodBinding)
+            {
+                res.append(libraryContent((LibraryMethodBinding) methodBinding));
             }
 
             res.append("\n\t}");
@@ -95,6 +96,11 @@ public class MethodContentParser{
         res.append("\n\t\treturn res;");
 
         return res.toString();
+    }
+
+    private String libraryContent(LibraryMethodBinding methodBinding)
+    {
+        return "\n\t\t" + methodBinding.getMethodCode();
     }
 
 }

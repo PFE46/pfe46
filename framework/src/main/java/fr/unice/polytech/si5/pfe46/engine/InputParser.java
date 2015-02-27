@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.*;
+import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.LibraryObject;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;
@@ -18,10 +20,6 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.BluetoothMethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.Method;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.MethodBinding;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.WsRestMethodBinding;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.BluetoothObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.ConnectedObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
@@ -51,7 +49,9 @@ public class InputParser {
 	private static final String WS_REST_OBJECT_PROPERTY           = "useOAuth";
 	private static final String BLUETOOTH_METHOD_BINDING_PROPERTY = "bluetoothMethod";
 	private static final String WS_REST_METHOD_BINDING_PROPERTY   = "endpoint";
-	
+	private static final String LIBRARY_OBJECT_PROPERTY           = "libraryType";
+	private static final String LIBRARY_METHOD_BINDING_PROPERTY   = "methodCode";
+
 	/**
 	 * Singleton accessor.
 	 * 
@@ -75,11 +75,13 @@ public class InputParser {
 		MyDeserializer<ConnectedObject> connectedObjectDeserializer = new MyDeserializer<ConnectedObject>(ConnectedObject.class);
 		connectedObjectDeserializer.register(BLUETOOTH_OBJECT_PROPERTY, BluetoothObject.class);
 		connectedObjectDeserializer.register(WS_REST_OBJECT_PROPERTY, WsRestObject.class);
+		connectedObjectDeserializer.register(LIBRARY_OBJECT_PROPERTY, LibraryObject.class);
 
 		// Allow deserialization of MethodBinding subclasses
 		MyDeserializer<MethodBinding> methodBindingDeserializer = new MyDeserializer<MethodBinding>(MethodBinding.class);
 		methodBindingDeserializer.register(BLUETOOTH_METHOD_BINDING_PROPERTY, BluetoothMethodBinding.class);
 		methodBindingDeserializer.register(WS_REST_METHOD_BINDING_PROPERTY, WsRestMethodBinding.class);
+		methodBindingDeserializer.register(LIBRARY_METHOD_BINDING_PROPERTY, LibraryMethodBinding.class);
 
 		// Needed to use deserializers above
 		SimpleModule module = new SimpleModule("InputDeserializer", new Version(1, 0, 0, null));
@@ -107,10 +109,11 @@ public class InputParser {
 		}
 		catch (IOException e)
 		{
-			throw new JsonParsingException(json);
+            e.printStackTrace();
+            throw new JsonParsingException(json);
 		}
-		
-		assignConnectedObjectToMethodBindings(input);
+
+        assignConnectedObjectToMethodBindings(input);
 		
 		return input;
 	}
@@ -127,7 +130,7 @@ public class InputParser {
 		
 		// TODO: manage the case where the kind of the method does not match the kind of object,
 		// BluetoothMethodBinding with a WsRestObject for example
-		
+
 		for (Method method : input.getMethods())
 		{
 			for (MethodBinding methodBinding : method.getBindings())

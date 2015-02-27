@@ -12,15 +12,21 @@ public class Main {
 
 	public static void main(String[] args)
 	{
-		String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"BLUETOOTH\",\"deviceId\":"
-				+ "\"wiiboardid\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
-				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
-				+ "\":[{\"object\":\"WiiBoard\",\"bluetoothMethod\":\"getWiiBoardWeightAddress\"},{"
-				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
+        String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
+                + "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
+                + "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
+                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"getWiiBoardWeightAddress();\", \"imports\": [\"ImportClass\"]},{"
+                + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
+
 
 		/*
 		 *   {
 		 *       "objects": [
+		 *           {
+		 *               "name": "Pulse O2",
+		 *               "protocol": "BLUETOOTH",
+		 *               "deviceId": "Pulse O2"
+		 *           },
 		 *           {
 		 *               "name": "WiiBoard",
 		 *               "protocol": "BLUETOOTH",
@@ -39,7 +45,8 @@ public class Main {
 		 *               "bindings": [
 		 *                   {
 		 *                       "object": "WiiBoard",
-		 *                       "bluetoothMethod": "getWiiBoardWeightAddress"
+		 *                       "methodCode": "getWiiBoardWeightAddress();",
+		 *                       "imports": ["ImportClass"]
 		 *                   },
 		 *                   {
 		 *                       "object": "SmartBodyAnalyzer",
@@ -51,8 +58,7 @@ public class Main {
 		 *       ]
 		 *   }
 		 */
-
-		try
+        try
 		{
 			// Parsing
 			Input input = InputParser.getInstance().parse(json);
