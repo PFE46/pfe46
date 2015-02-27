@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.FileUtils;
+
 import fr.unice.polytech.si5.pfe46.Config;
 import fr.unice.polytech.si5.pfe46.templating.VelocityCodeGenerator;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
@@ -79,8 +81,11 @@ public class MavenProjectGenerator {
 			createZipEntry(out, MAVEN_POM_XML, pomXmlCode);
 			
 			// Add modules
-			File modulesDirectory = new File("src/main/resources/" + MODULES_FOLDER);
+			// FIXME: ugly hack
+			File modulesDirectory = new File("src/main/java/fr/unice/polytech/si5/pfe46/" + MODULES_FOLDER);
 			addModule(out, modulesDirectory);
+			File jsonProcess = new File("src/main/java/fr/unice/polytech/si5/pfe46/utils/JsonProcess.java");
+			addModule(out, jsonProcess);
 		}
 		finally
 		{
@@ -118,7 +123,11 @@ public class MavenProjectGenerator {
 		{
 			for (File f : file.listFiles())
 			{
-				addModule(out, f);
+				// FIXME
+				if (!f.getName().equals("Main.java"))
+				{
+					addModule(out, f);
+				}
 			}
 		}
 		else
@@ -126,12 +135,13 @@ public class MavenProjectGenerator {
 			// #WTF
 			//
 			// FIXME:
-			// absolute path is like "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/modules/package/File.java"
-			// split gives ["/Users/victorsalle/Cours/PFE/pfe46/", "/src/main/resources/modules/package/File.java"]
-			// split[1] = "/src/main/resources/modules/package/File.java"
-			// replacing all "resources" by "java" returns "/src/main/java/modules/package/File.java"
+			// absolute path is like "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"
+			// split gives ["/Users/victorsalle/Cours/PFE/pfe46/", "/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"]
+			// split[1] = "/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"
+			// split gives ["/src/main/java/", "modules/File.java"]
 			// equivalent to the Maven file structure to embed in the zip file
-			ZipEntry entry = new ZipEntry(file.getAbsolutePath().split("framework")[1].replaceAll("resources", "java"));
+			String[] fileName = file.getAbsolutePath().split("framework")[1].split("fr/unice/polytech/si5/pfe46/");
+			ZipEntry entry = new ZipEntry(fileName[0] + fileName[1]);
 			entry.setMethod(ZipEntry.DEFLATED);
 			out.putNextEntry(entry);
 			out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));

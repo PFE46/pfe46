@@ -138,7 +138,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- Copy each module in resources directory -->
+			<!-- Copy each module in resources directory
 			<plugin>
 			    <groupId>org.codehaus.gmaven</groupId>
 			    <artifactId>gmaven-plugin</artifactId>
@@ -153,7 +153,7 @@
 			            </configuration>
 			        </execution>
 			    </executions>
-			</plugin>
+			</plugin> -->
         </plugins>
     </build>
 
