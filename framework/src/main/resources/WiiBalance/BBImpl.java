@@ -1,3 +1,4 @@
+package fr.unice.polytech.si5.pfe46.modules;
 
 import wiiremotej.*;
 import wiiremotej.event.*;
@@ -37,7 +38,7 @@ public class BBImpl extends BalanceBoardAdapter
 	
 	
 
-	public void getWeigth()
+	public void getWeight()
 	{
 		// To handle java.lang.IllegalArgumentException: PCM 11, PCM values restricted by JSR-82 to minimum 4097, see BlueCoveConfigProperties.PROPERTY_JSR_82_PSM_MINIMUM_OFF
 		System.setProperty(BlueCoveConfigProperties.PROPERTY_JSR_82_PSM_MINIMUM_OFF, "true");

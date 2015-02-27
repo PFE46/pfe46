@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -78,7 +78,31 @@ public class MavenProjectGenerator {
 			createZipEntry(out, MAVEN_STRUCTURE_JAVA + device.getDeviceName() + "Server.java", serverCode);
 			
 			// Generate pom.xml
-			List<MavenDependency> dependencies = new ArrayList<>(); // TODO
+			Set<MavenDependency> dependencies = new HashSet<>(); // TODO
+			
+			//
+			// FIXME: HARD CODED //
+			//
+				MavenDependency bluecove = new MavenDependency();
+				bluecove.setGroupId("net.sf.bluecove");
+				bluecove.setArtifactId("bluecove");
+				bluecove.setVersion("2.1.0");
+				
+				MavenDependency wiiRemoteJ = new MavenDependency();
+				wiiRemoteJ.setGroupId("wiiremotej");
+				wiiRemoteJ.setArtifactId("wiiremotej");
+				wiiRemoteJ.setVersion("1.0");
+				wiiRemoteJ.setScope("system");
+				wiiRemoteJ.setSystemPath("${basedir}/src/main/resources/lib/WiiRemoteJ.jar");
+				
+				dependencies.add(bluecove);
+				dependencies.add(wiiRemoteJ);
+				addLibrary(out, new File("src/main/resources/WiiBalance/WiiRemoteJ.jar"));
+				addModule(out, new File("src/main/resources/WiiBalance/BBImpl.java"));
+			//
+			// FIXME: HARD CODED //
+			//
+				
 			String pomXmlCode = VelocityCodeGenerator.getIntance().generatePomXml(device, dependencies);
 			createZipEntry(out, MAVEN_POM_XML, pomXmlCode);
 			
@@ -125,8 +149,8 @@ public class MavenProjectGenerator {
 		{
 			for (File f : file.listFiles())
 			{
-				// FIXME
-				if (!f.getName().equals("Main.java"))
+				// FIXME: remove MainModules.java
+				if (!f.getName().equals("MainModule.java"))
 				{
 					addModule(out, f);
 				}
@@ -134,21 +158,38 @@ public class MavenProjectGenerator {
 		}
 		else
 		{
-			// #WTF
+			// FIXME: ugly hack
 			//
-			// FIXME:
 			// absolute path is like "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"
-			// split gives ["/Users/victorsalle/Cours/PFE/pfe46/", "/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"]
-			// split[1] = "/src/main/java/fr/unice/polytech/si5/pfe46/modules/File.java"
-			// split gives ["/src/main/java/", "modules/File.java"]
-			// equivalent to the Maven file structure to embed in the zip file
-			String[] fileName = file.getAbsolutePath().split("framework")[1].split("fr/unice/polytech/si5/pfe46/");
-			ZipEntry entry = new ZipEntry(fileName[0] + fileName[1]);
+			// split gives ["/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/java/", "modules/File.java"]
+			// split[1] = "modules/File.java"
+			// -> equivalent to the file structure to embed in the zip file
+
+			String fileName;
+			ZipEntry entry;
+			try
+			{
+				fileName = file.getAbsolutePath().split("fr/unice/polytech/si5/pfe46/")[1];
+				entry = new ZipEntry("/src/main/java/" + fileName);
+			}
+			catch (Exception e) // FIXME: ugly hack
+			{
+				entry = new ZipEntry("/src/main/java/modules/" + file.getName());
+			}
 			
 			entry.setMethod(ZipEntry.DEFLATED);
 			out.putNextEntry(entry);
 			out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
 		}
+	}
+	
+	private void addLibrary(ZipOutputStream out, File file) throws IOException
+	{
+		ZipEntry entry = new ZipEntry("/src/main/resources/lib/" + file.getName());
+		
+		entry.setMethod(ZipEntry.DEFLATED);
+		out.putNextEntry(entry);
+		out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
 	}
 	
 }

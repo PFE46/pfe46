@@ -98,6 +98,7 @@ public class InputToUpnpDevice {
 	        UpnpStateVariable jsonOutput = new UpnpStateVariable();
 	        jsonOutput.setName("jsonOutput");
 	        jsonOutput.setDatatype(UpnpStateVariableType.STRING);
+	        jsonOutput.setSendEvents(true);
 	        
 	        upnpMethod.setOutput(jsonOutput);
 	        

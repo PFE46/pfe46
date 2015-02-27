@@ -2,8 +2,8 @@ package fr.unice.polytech.si5.pfe46.templating;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -104,10 +104,10 @@ public class VelocityCodeGenerator {
 	 * Generate Pom.XML for the Maven project.
 	 * 
 	 * @param device Device.
-	 * @param dependencies List of Maven dependencies.
+	 * @param dependencies Set of Maven dependencies.
 	 * @return Generated code.
 	 */
-	public String generatePomXml(UpnpDevice device, List<MavenDependency> dependencies)
+	public String generatePomXml(UpnpDevice device, Set<MavenDependency> dependencies)
 	{
 		// Retrieve the template
 		Template template = velocityEngine.getTemplate(Config.VELOCITY_TEMPLATE_POMXML);

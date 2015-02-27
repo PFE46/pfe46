@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.*;
-import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.LibraryObject;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;
@@ -22,6 +22,7 @@ import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.BluetoothObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.ConnectedObject;
+import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.LibraryObject;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.objects.WsRestObject;
 
 /**

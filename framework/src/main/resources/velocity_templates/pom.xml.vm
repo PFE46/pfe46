@@ -32,7 +32,7 @@
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2.1</version>
+          <version>2.3</version>
           <executions>
               <execution>
                   <id>package-jar-with-dependencies</id>
@@ -94,6 +94,12 @@
         <groupId>${dependency.groupId}</groupId>
         <artifactId>${dependency.artifactId}</artifactId>
         <version>${dependency.version}</version>
+        #if( "$!dependency.scope" != "" )
+        <scope>${dependency.scope}</scope>
+        #end
+        #if( "$!dependency.systemPath" != "" )
+        <systemPath>${dependency.systemPath}</systemPath>
+        #end
     </dependency>
     #end
   </dependencies>
