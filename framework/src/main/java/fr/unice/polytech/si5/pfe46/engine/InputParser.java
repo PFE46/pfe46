@@ -109,8 +109,7 @@ public class InputParser {
 		}
 		catch (IOException e)
 		{
-            e.printStackTrace();
-            throw new JsonParsingException(json);
+            throw new JsonParsingException(e);
 		}
 
         assignConnectedObjectToMethodBindings(input);

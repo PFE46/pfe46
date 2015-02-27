@@ -27,12 +27,21 @@ public class MethodContentParser{
     {
         StringBuilder res = new StringBuilder();
         //Set<Modules> modules = new HashSet<>();
+        boolean first = true;
         
         for (MethodBinding methodBinding : binding)
         {
             ConnectedObject object = methodBinding.getConnectedObject();
 
-            res.append("\n\tif (objectName.equals(\"");
+            if (first)
+            {
+            	res.append("\n\tif");
+            }
+            else
+            {
+            	res.append("\n\telse if");
+            }
+            res.append(" (objectName.equals(\"");
             res.append(object.getName() + "\")) {");
 
             if (methodBinding instanceof WsRestMethodBinding)
@@ -49,6 +58,8 @@ public class MethodContentParser{
             }
 
             res.append("\n\t}");
+            
+            first = false;
         }
         res.append("return \"{\\\"error\\\":\\\"true\\\"}\";");
 
@@ -78,7 +89,7 @@ public class MethodContentParser{
         }
         else
         {
-            if (methodBinding.getVerb() == WsRestVerb.GET)
+            if (methodBinding.getVerb() == WsRestMethodBinding.WsRestVerb.GET)
             {
                 res.append("\n\t\tString res = WSHandler.getInstance().get(uri);");
             }
