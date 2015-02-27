@@ -10,7 +10,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import fr.unice.polytech.si5.pfe46.Config;
-import fr.unice.polytech.si5.pfe46.templating.components.MavenDependency;
+import fr.unice.polytech.si5.pfe46.engine.inputtype.MavenDependency;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpService;
 

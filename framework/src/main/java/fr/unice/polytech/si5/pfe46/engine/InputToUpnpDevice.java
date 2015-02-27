@@ -13,6 +13,7 @@ import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariable;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpStateVariableType;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
+import fr.unice.polytech.si5.pfe46.utils.Pair;
 
 /**
  * From Input pojo to UpnpDevice.
@@ -48,12 +49,13 @@ public class InputToUpnpDevice {
 	 * Transform an Input pojo in a UpnpDevice.
 	 * 
 	 * @param input Input to transform.
-	 * @return Corresponding UpnpDevice.
+	 * @return Corresponding UpnpDevice and its Requirements.
 	 * @throws UpnpStateVariableConflictException 
 	 * @throws DuplicateMethodSignatureException 
 	 */
-	public UpnpDevice getDevice(Input input) throws UpnpStateVariableConflictException, DuplicateMethodSignatureException
+	public Pair<UpnpDevice, Requirements> getDevice(Input input) throws UpnpStateVariableConflictException, DuplicateMethodSignatureException
 	{
+		// Device
 		UpnpDevice device = createDevice(input);
 		List<UpnpMethod> methods = createMethods(input);
 		UpnpService service = createService();
@@ -65,11 +67,20 @@ public class InputToUpnpDevice {
 		
 		device.addService(service);
 		
-		return device;
+		// Requirements
+		Requirements requirements = new Requirements();
+		requirements.addLocalJars(input.getLocalJars());
+		requirements.addMavenDependencies(input.getMavenDependencies());
+		requirements.addJavaModules(input.getJavaModules());
+		
+		return new Pair<UpnpDevice, Requirements>(device, requirements);
 	}
 	
 	private List<UpnpMethod> createMethods(Input input) throws UpnpStateVariableConflictException
 	{
+		// TODO: add requirements
+		
+		
 		List<UpnpMethod> methods = new ArrayList<>();
 		
 		for (Method inputMethod : input.getMethods())

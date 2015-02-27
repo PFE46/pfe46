@@ -1,4 +1,4 @@
-package fr.unice.polytech.si5.pfe46.templating.components;
+package fr.unice.polytech.si5.pfe46.engine.inputtype;
 
 public class MavenDependency {
 

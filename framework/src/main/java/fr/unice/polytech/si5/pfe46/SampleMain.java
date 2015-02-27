@@ -112,7 +112,7 @@ public class SampleMain
         
         MavenProjectGenerator g = MavenProjectGenerator.getInstance();
         try {
-        	g.generateMavenProject(device);
+        	g.generateMavenProject(device, null);
         } catch (Exception e)
         {
         	e.printStackTrace();

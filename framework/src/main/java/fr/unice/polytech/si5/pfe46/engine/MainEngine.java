@@ -7,74 +7,92 @@ import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.DuplicateMethodSignatureException;
 import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConflictException;
+import fr.unice.polytech.si5.pfe46.utils.Pair;
 
 public class MainEngine {
 
 	public static void main(String[] args)
 	{
-        String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
-                + "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
-                + "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
-                + "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();\", \"imports\": [\"ImportClass\"]},{"
-                + "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}]}";
+		String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
+				+ "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
+				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
+				+ "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();\", \"imports\": [\"ImportClass\"]},{"
+				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}],"
+				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"}],\"localJars\":[\"/Users/victorsalle/"
+				+ "Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar\"], \"javaModules\":[\"/Users/victorsalle/Cours/PFE/pfe46/framework/src/"
+				+ "main/resources/WiiBalance/BBImpl.java\"]}";
 
 		/*
-		 *   {
-		 *       "objects": [
-		 *           {
-		 *               "name": "Pulse O2",
-		 *               "protocol": "BLUETOOTH",
-		 *               "deviceId": "Pulse O2"
-		 *           },
-		 *           {
-		 *               "name": "WiiBoard",
-		 *               "protocol": "BLUETOOTH",
-		 *               "deviceId": "wiiboardid"
-		 *           },
-		 *           {
-		 *               "name": "SmartBodyAnalyzer",
-		 *               "protocol": "WS_REST",
-		 *               "useOAuth": true,
-		 *               "provider": "Withings"
-		 *           }
-		 *       ],
-		 *       "methods": [
-		 *           {
-		 *               "name": "getWeight",
-		 *               "bindings": [
-		 *                   {
-		 *                       "object": "WiiBoard",
-		 *                       "methodCode": "getWiiBoardWeightAddress();",
-		 *                       "imports": ["ImportClass"]
-		 *                   },
-		 *                   {
-		 *                       "object": "SmartBodyAnalyzer",
-		 *                       "endpoint": "https://wbsapi.withings.net/measure?action=getmeas",
-		 *                       "verb": "GET"
-		 *                   }
-		 *               ]
-		 *           }
-		 *       ]
-		 *   }
+		 * {
+		 * 	"objects":[
+		 * 		{
+		 * 			"name":"WiiBoard",
+		 * 			"protocol":"LIBRARY",
+		 * 			"libraryType":"JAR",
+		 * 			"id": "WiiRemoteJ"
+		 * 		},
+		 * 		{
+		 * 			"name":"SmartBodyAnalyzer",
+		 * 			"protocol":"WS_REST",
+		 * 			"useOAuth":true,
+		 * 			"provider":"Withings"
+		 * 		}
+		 * 	],
+		 * 	"methods":[
+		 * 		{
+		 * 			"name":"getWeight",
+		 * 			"bindings":[
+		 * 				{
+		 * 					"object":"WiiBoard",
+		 * 					"methodCode":"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();",
+		 * 					"imports":[
+		 * 						"ImportClass"
+		 * 					]
+		 * 				},
+		 * 				{
+		 * 					"object":"SmartBodyAnalyzer",
+		 * 					"endpoint":"https://wbsapi.withings.net/measure?action=getmeas&meastype=1",
+		 * 					"verb":"GET"
+		 * 				}
+		 * 			]
+		 * 		}
+		 * 	],
+		 * 	"mavenDependencies":[
+		 * 		{
+		 * 			"groupId":"net.sf.bluecove",
+		 * 			"artifactId":"bluecove",
+		 * 			"version":"2.1.0"
+		 * 		}
+		 * 	],
+		 *  "localJars":[
+		 *  	"/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar"
+		 *  ],
+		 *  "javaModules":[
+		 *  	"/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/BBImpl.java"
+		 *  ]
+		 * }
 		 */
-        try
+
+		try
 		{
 			// Parsing
 			Input input = InputParser.getInstance().parse(json);
-			
+
 			// Generate UpnpDevice
-			UpnpDevice upnpDevice = InputToUpnpDevice.getInstance().getDevice(input);
-			
+			Pair<UpnpDevice, Requirements> device = InputToUpnpDevice.getInstance().getDevice(input);
+			UpnpDevice upnpDevice = device.first;
+			Requirements requirements = device.second;
+
 			// Generate Maven project
-			MavenProjectGenerator.getInstance().generateMavenProject(upnpDevice);
+			MavenProjectGenerator.getInstance().generateMavenProject(upnpDevice, requirements);
 		}
 		catch (JsonParsingException | IOException
 				| UpnpStateVariableConflictException | DuplicateMethodSignatureException e)
 		{
 			e.printStackTrace();
 		}
-		
-/*
+
+		/*
 		//
 		// Println.
 		//
