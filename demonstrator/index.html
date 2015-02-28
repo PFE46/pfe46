@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demonstrateur</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-material-design/dist/css/material-wfont.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-material-blue-grey">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)">Demonstrateur PFE-46</a>
+            </div>
+        </nav>
+
+    </header>
+
+    <div class="container">
+
+        <div class="row" id="action-buttons">
+
+            <div class="col-xs-3 text-center">
+                <a href="javascript:void(0)" class="btn btn-default btn-fab btn-raised">
+                    <i class="mdi-action-assessment mdi-material-orange"></i>
+                </a>
+                <h4>Poids</h4>
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <a href="javascript:void(0)" class="btn btn-default btn-fab btn-raised">
+                    <i class="mdi-action-favorite mdi-material-red"></i>
+                </a>
+                <h4>Rythme cardiaque</h4>
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <a href="javascript:void(0)" class="btn btn-default btn-fab btn-raised">
+                    <i class="mdi-maps-directions-walk mdi-material-blue"></i>
+                </a>
+                <h4>Masse grasse</h4>
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <a href="javascript:void(0)" class="btn btn-default btn-fab btn-raised">
+                    <i class="mdi-device-dvr mdi-material-green"></i>
+                </a>
+                <h4>Objets</h4>
+            </div>
+
+        </div>
+
+        <div class="row" id="scale-buttons">
+
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-material-blue-grey" href="#">Jour</a>
+                <a class="btn btn-material-blue-grey-300" href="#">Semaine</a>
+                <a class="btn btn-material-blue-grey-300" href="#">Mois</a>
+            </div>
+
+        </div>
+
+        <div class="row" id="graph-container">
+            <div class="col-lg-10 col-xs-12" id="chartdiv"></div>
+            <div class="col-lg-2 col-xs-12" id="legend">
+                <h3>Legende</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+    <script type="application/javascript" src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+
+    <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script type="text/javascript" src="http://www.amcharts.com/lib/3/serial.js"></script>
+    <script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/none.js"></script>
+
+    <script type="text/javascript" src="js/charts/weight.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.material.init();
+        });
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+</html>
