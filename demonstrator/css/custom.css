@@ -11,6 +11,10 @@
     font-size: 17px;
 }
 
+#legend-buttons .togglebutton label input[type=checkbox]:first-child:checked+.toggle:after {
+    background-color: #607d8b;
+}
+
 .amChartsLegend text {
     font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
