@@ -2,6 +2,38 @@
     top: 0;
 }
 
+#action-buttons .active > a > i {
+    color: #ffffff;
+}
+
+#action-buttons #weight-button.active > h4 {
+    color: #ff9800;
+}
+#action-buttons #weight-button.active > a {
+    background-color: #ff9800;
+}
+
+#action-buttons #bpm-button.active > h4 {
+    color: #f44336;
+}
+#action-buttons #bpm-button.active > a {
+    background-color: #f44336;
+}
+
+#action-buttons #grease-button.active > h4 {
+    color: #2196f3;
+}
+#action-buttons #grease-button.active > a {
+    background-color: #2196f3;
+}
+
+#action-buttons #objects-button.active > h4 {
+    color: #4caf50;
+}
+#action-buttons #objects-button.active > a {
+    background-color: #4caf50;
+}
+
 #chartdiv {
     height		: 400px;
     font-size	: 11px;

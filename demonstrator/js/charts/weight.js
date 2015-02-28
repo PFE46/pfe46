@@ -117,7 +117,6 @@ var chart;
             });
 
             var rgbColor = hexToRgb(graph.lineColor);
-            console.log($togglebutton.find('span.toggle'));
 
             $togglebutton
                 .find('span.toggle').css('background-color', 'rgba('+rgbColor.r+','+rgbColor.g+','+rgbColor.b+',.5)')
@@ -127,9 +126,22 @@ var chart;
 
     });
 
-    //chart.addListener("dataUpdated", zoomChart);
-    //zoomChart();
+    /* Events */
+    $('a[data-action="toggle-menu"]').on('click', function () {
 
+        var $me = $(this),
+            $parent = $me.parent();
+
+        if (!$parent.hasClass('active')) {
+
+            $('#action-buttons').find('div.active').removeClass('active');
+            $me.parent().addClass('active');
+
+        }
+
+    });
+
+    /* Functions */
     function zoomChart(){
         if(chart.zoomToIndexes){
             chart.zoomToIndexes(130, chartData.length - 1);
@@ -144,6 +156,9 @@ var chart;
             b: parseInt(result[3], 16)
         } : null;
     }
+
+    //chart.addListener("dataUpdated", zoomChart);
+    //zoomChart();
 
 })(jQuery);
 
