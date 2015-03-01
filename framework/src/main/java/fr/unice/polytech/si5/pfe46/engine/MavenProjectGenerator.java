@@ -92,11 +92,10 @@ public class MavenProjectGenerator {
 					addLibrary(out, jar);
 
 					MavenDependency dep = new MavenDependency();
-					dep.setGroupId(jar.getName());
-					dep.setArtifactId(jar.getName());
+					dep.setGroupId("com");
+					dep.setArtifactId(jar.getName().substring(0, jar.getName().lastIndexOf(".")));
 					dep.setVersion("1.0");
-					dep.setScope("system");
-					dep.setSystemPath("${basedir}/src/main/resources/lib/" + jar.getName());
+					dep.setLocalJar(true);
 					dependencies.add(dep);
 				}
 			}
@@ -179,7 +178,11 @@ public class MavenProjectGenerator {
 
 	private void addLibrary(ZipOutputStream out, File file) throws IOException
 	{
-		ZipEntry entry = new ZipEntry("/src/main/resources/lib/" + file.getName());
+		ZipEntry entry = new ZipEntry("/localrepo" 
+										+ "/com/"
+										+ file.getName().substring(0, file.getName().lastIndexOf("."))
+										+ "/1.0/"
+										+ file.getName().substring(0, file.getName().lastIndexOf(".")) + "-1.0.jar");
 
 		entry.setMethod(ZipEntry.DEFLATED);
 		out.putNextEntry(entry);

@@ -116,6 +116,18 @@ public class VelocityCodeGenerator {
 		VelocityContext context = new VelocityContext();
 		context.put("device", device);
 		context.put("dependencies", dependencies);
+		
+		boolean localDependencies = false;
+		for (MavenDependency mavenDependency : dependencies)
+		{
+			if (mavenDependency.isLocalJar())
+			{
+				localDependencies = true;
+				break;
+			}
+		}
+		
+		context.put("localDependencies", localDependencies);
 
 		// Fill the template
 		StringWriter writer = new StringWriter();

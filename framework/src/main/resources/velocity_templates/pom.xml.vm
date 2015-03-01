@@ -15,6 +15,12 @@
             <enabled>false</enabled>
         </snapshots>
     </repository>
+    #if( $localDependencies )
+    <repository>
+        <id>localrepository</id>
+        <url>file://${basedir}/localrepo</url>
+    </repository>
+    #end
   </repositories>
   <build>
     <plugins>
@@ -93,13 +99,7 @@
     <dependency>
         <groupId>${dependency.groupId}</groupId>
         <artifactId>${dependency.artifactId}</artifactId>
-        <version>${dependency.version}</version>
-        #if( "$!dependency.scope" != "" )
-        <scope>${dependency.scope}</scope>
-        #end
-        #if( "$!dependency.systemPath" != "" )
-        <systemPath>${dependency.systemPath}</systemPath>
-        #end
+        <version>${dependency.version}</version> <!-- WARNING: hard-coded, non-corresponding version number -->
     </dependency>
     #end
   </dependencies>

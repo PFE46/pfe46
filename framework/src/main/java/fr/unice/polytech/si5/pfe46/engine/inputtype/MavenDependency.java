@@ -5,8 +5,7 @@ public class MavenDependency {
 	private String groupId;
 	private String artifactId;
 	private String version;
-	private String scope;
-	private String systemPath;
+	private boolean localJar = false;
 
 	public String getGroupId() { return groupId; }
 	public void setGroupId(String groupId) { this.groupId = groupId; }
@@ -16,11 +15,8 @@ public class MavenDependency {
 
 	public String getVersion() { return version; }
 	public void setVersion(String version) { this.version = version; }
+	
+	public boolean isLocalJar() { return localJar; }
+	public void setLocalJar(boolean localJar) { this.localJar = localJar; }
 
-	public String getScope() { return scope; }
-	public void setScope(String scope) { this.scope = scope; }
-	
-	public String getSystemPath() { return systemPath; }
-	public void setSystemPath(String systemPath) { this.systemPath = systemPath; }
-	
 }
