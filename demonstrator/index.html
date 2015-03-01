@@ -61,21 +61,36 @@
 
         </div>
 
-        <div class="row" id="scale-buttons">
+        <div class="row" id="graph-container">
 
-            <div class="btn-group btn-group-justified">
-                <a data-action="display-day" class="btn btn-material-blue-grey-300" href="#">Jour</a>
-                <a data-action="display-week" class="btn btn-material-blue-grey-300" href="#">Semaine</a>
-                <a data-action="display-month" class="btn active btn-material-blue-grey-300" href="#">Mois</a>
+            <div class="row" id="scale-buttons">
+
+                <div class="btn-group btn-group-justified">
+                    <a data-action="display-day" class="btn btn-material-blue-grey-300" href="#">Jour</a>
+                    <a data-action="display-week" class="btn btn-material-blue-grey-300" href="#">Semaine</a>
+                    <a data-action="display-month" class="btn active btn-material-blue-grey-300" href="#">Mois</a>
+                </div>
+
+            </div>
+
+            <div class="row" >
+                <div class="col-lg-9 col-xs-12" id="chartdiv"></div>
+                <div class="col-lg-3 col-xs-12" id="legend">
+                    <h3>Legende</h3>
+                    <div id="legend-buttons" class="form-group"></div>
+                </div>
             </div>
 
         </div>
 
-        <div class="row" id="graph-container">
-            <div class="col-lg-9 col-xs-12" id="chartdiv"></div>
-            <div class="col-lg-3 col-xs-12" id="legend">
-                <h3>Legende</h3>
+        <div class="row" id="objects-container">
+
+            <div class="row text-center">
+                <h2>Objets</h2>
             </div>
+
+            <div class="row" id="objects-details"></div>
+
         </div>
 
     </div>
@@ -91,6 +106,9 @@
     <script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/none.js"></script>
 
     <script type="text/javascript" src="js/charts/weight.js"></script>
+    <script type="text/javascript" src="js/charts/heart.js"></script>
+    <script type="text/javascript" src="js/charts/grease.js"></script>
+    <script type="text/javascript" src="js/objects.js"></script>
     <script type="text/javascript" src="js/master.js"></script>
 
 </body>

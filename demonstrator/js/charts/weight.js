@@ -68,4 +68,4 @@ var weight_data = [
             "minHorizontalGap":100
         }
     }
-    ;
+;

@@ -54,3 +54,18 @@
 .amChartsLegend text {
     font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
+
+#objects-container {
+    display: none;
+}
+
+#objects-details {
+    margin-top: 20px;
+}
+
+#objects-details i.device-on {
+    background-color: #4caf50;
+}
+#objects-details i.device-off {
+    background-color: #f44336;
+}

@@ -32,32 +32,7 @@ function makeChart(chart) {
 chart = makeChart(weight_chart);
 
 chart.addListener('rendered', function (event) {
-
-    // populate our custom legend when chart renders
-    chart.customLegend = document.getElementById('legend');
-
-    $('#legend').append('<div id="legend-buttons" class="form-group"></div>');
-
-    chart.graphs.forEach(function (graph, i) {
-
-        var $togglebutton = $('<div class="togglebutton"><label><input type="checkbox" checked> ' + graph.title + '</label></div>');
-
-        $('#legend-buttons').append($togglebutton);
-
-        $.material.init();
-
-        $togglebutton.on('change', function () {
-            toggleChart(i);
-        });
-
-        var rgbColor = hexToRgb(graph.lineColor);
-
-        $togglebutton
-            .find('span.toggle').css('background-color', 'rgba('+rgbColor.r+','+rgbColor.g+','+rgbColor.b+',.5)')
-        ;
-
-    });
-
+    populateLegend();
 });
 
 /* Events */
@@ -71,10 +46,35 @@ $('a[data-action="toggle-menu"]').on('click', function () {
 
         $('#chartdiv').empty();
 
-        var parent_id = $parent.attr('id');
+        var parent_id = $parent.attr('id'),
+            $graph_container = $('#graph-container'),
+            $objects_container = $('#objects-container');
 
-        if (parent_id == 'weight-button') {
-            chart = makeChart(weight_chart);
+        if (parent_id == 'objects-button') {
+
+            $graph_container.hide();
+            $objects_container.show();
+
+            populateObjects();
+        }
+        else {
+
+            if (!$graph_container.is(':visible')) {
+                $graph_container.show();
+                $objects_container.hide();
+            }
+
+            if (parent_id == 'weight-button') {
+                chart = makeChart(weight_chart);
+            }
+            else if (parent_id == 'bpm-button') {
+                chart = makeChart(heart_chart);
+            }
+            else if (parent_id == 'grease-button') {
+                chart = makeChart(grease_chart);
+            }
+            populateLegend();
+
         }
 
         $('#action-buttons').find('div.active').removeClass('active');
@@ -120,6 +120,33 @@ $('a[data-action^="display-"]').on('click', function () {
 });
 
 /* Functions */
+
+function populateLegend() {
+    // populate our custom legend when chart renders
+    chart.customLegend = document.getElementById('legend');
+
+    $('#legend-buttons').empty();
+
+    chart.graphs.forEach(function (graph, i) {
+
+        var $togglebutton = $('<div class="togglebutton"><label><input type="checkbox" ' + (graph.hidden ? '' : 'checked') + '> ' + graph.title + '</label></div>');
+
+        $('#legend-buttons').append($togglebutton);
+
+        $.material.init();
+
+        $togglebutton.on('change', function () {
+            toggleChart(i);
+        });
+
+        var rgbColor = hexToRgb(graph.lineColor);
+
+        $togglebutton
+            .find('span.toggle').css('background-color', 'rgba('+rgbColor.r+','+rgbColor.g+','+rgbColor.b+',.5)')
+        ;
+
+    });
+}
 
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
