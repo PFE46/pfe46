@@ -62,6 +62,7 @@ $('a[data-action="toggle-menu"]').on('click', function () {
             if (!$graph_container.is(':visible')) {
                 $graph_container.show();
                 $objects_container.hide();
+                $('#objects-details').empty();
             }
 
             if (parent_id == 'weight-button') {
