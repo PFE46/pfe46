@@ -15,11 +15,17 @@ public class ObjectInfosData {
     public ObjectInfosData() {}
 
     public ObjectInfosData(long id, String objectName, String status, String batteryLevel) {
-        this.id = id;
+        this.setId(id);
+        this.setObjectName(objectName);
+        this.setStatus(status);
+        this.setBatteryLevel(batteryLevel);
     }
 
     public long getId() {
         return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getObjectName() {
@@ -42,4 +48,5 @@ public class ObjectInfosData {
     public void setBatteryLevel(String batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
+
 }

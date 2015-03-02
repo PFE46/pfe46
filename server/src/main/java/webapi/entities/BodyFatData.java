@@ -5,30 +5,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "body_fat_datas")
-public class BodyFatData {
+public class BodyFatData extends Data {
 
-    private long id;
-    private String date;
     private String bodyFat;
+
+
 
     public BodyFatData() {}
 
-    public BodyFatData(long id, String objectName, String date, String bodyFat) {
-        this.id = id;
-        this.setDate(date);
+    public BodyFatData(String objectName, String date, String bodyFat) {
+        super(date, objectName);
         this.setBodyFat(bodyFat);
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public String getDate() {
-        return date;
-    }
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public String getBodyFat() {
         return bodyFat;
