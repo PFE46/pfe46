@@ -1,5 +1,6 @@
 package fr.unice.polytech.si5.pfe46.engine;
 
+import java.io.File;
 import java.io.IOException;
 
 import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
@@ -19,9 +20,9 @@ public class MainEngine {
 				+ "\":[{\"object\":\"WiiBoard\","
 				+ "\"methodCode\":\"BBImpl bbimpl = new BBImpl(); Double res = bbimpl.getWeight(); res = (double) Math.round(res * 100); res = res/100;return String.valueOf(res);\", \"imports\": [\"ImportClass\"]},{"
 				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}],"
-				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"},{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove-gpl\",\"version\":\"2.1.0\"}],\"localJars\":[\"/Users/victorsalle/"
-				+ "Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar\"], \"javaModules\":[\"/Users/victorsalle/Cours/PFE/pfe46/framework/src/"
-				+ "main/resources/WiiBalance/BBImpl.java\"]}";
+				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"},{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove-gpl\",\"version\":\"2.1.0\"}],"
+				+ "\"localJars\":[\"" + new File("src/main/resources/WiiBalance/WiiRemoteJ.jar").getAbsolutePath() + "\"], "
+				+ "\"javaModules\":[\"" + new File("src/main/resources/WiiBalance/BBImpl.java").getAbsolutePath() + "\"]}";
 
 		/*
 		 * {
