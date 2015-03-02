@@ -16,9 +16,10 @@ public class MainEngine {
 		String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
 				+ "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
 				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
-				+ "\":[{\"object\":\"WiiBoard\", \"methodCode\":\"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();\", \"imports\": [\"ImportClass\"]},{"
+				+ "\":[{\"object\":\"WiiBoard\","
+				+ "\"methodCode\":\"BBImpl bbimpl = new BBImpl(); Double res = bbimpl.getWeight(); res = (double) Math.round(res * 100); res = res/100;return String.valueOf(res);\", \"imports\": [\"ImportClass\"]},{"
 				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}],"
-				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"}],\"localJars\":[\"/Users/victorsalle/"
+				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"},{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove-gpl\",\"version\":\"2.1.0\"}],\"localJars\":[\"/Users/victorsalle/"
 				+ "Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar\"], \"javaModules\":[\"/Users/victorsalle/Cours/PFE/pfe46/framework/src/"
 				+ "main/resources/WiiBalance/BBImpl.java\"]}";
 
@@ -44,7 +45,14 @@ public class MainEngine {
 		 * 			"bindings":[
 		 * 				{
 		 * 					"object":"WiiBoard",
-		 * 					"methodCode":"BBImpl bbimpl = new BBImpl(); \\n\\t\\tbbimpl.getWeight();",
+		 * 					"methodCode":"
+		 *						BBImpl bbimpl = new BBImpl();
+		 *						Double res = bbimpl.getWeight();
+		 *						// Round Double result to two decimal places
+		 *						res = (double) Math.round(res * 100);
+		 *						res = res/100;
+		 *						return "{\"weight\": \"" + res + "\"}";
+		 *					",
 		 * 					"imports":[
 		 * 						"ImportClass"
 		 * 					]
@@ -61,6 +69,11 @@ public class MainEngine {
 		 * 		{
 		 * 			"groupId":"net.sf.bluecove",
 		 * 			"artifactId":"bluecove",
+		 * 			"version":"2.1.0"
+		 * 		},
+		 * 		{
+		 * 			"groupId":"net.sf.bluecove",
+		 * 			"artifactId":"bluecove-gpl",
 		 * 			"version":"2.1.0"
 		 * 		}
 		 * 	],

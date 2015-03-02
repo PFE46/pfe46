@@ -99,7 +99,7 @@
     <dependency>
         <groupId>${dependency.groupId}</groupId>
         <artifactId>${dependency.artifactId}</artifactId>
-        <version>${dependency.version}</version> <!-- WARNING: hard-coded, non-corresponding version number -->
+        <version>${dependency.version}</version>#if( $dependency.localJar )<!-- WARNING: hard-coded, non-corresponding version number -->#end
     </dependency>
     #end
   </dependencies>

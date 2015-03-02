@@ -1,14 +1,17 @@
 package fr.unice.polytech.si5.pfe46.modules;
 
-import wiiremotej.*;
-import wiiremotej.event.*;
-
-import com.intel.bluetooth.BlueCoveConfigProperties;
-
+import wiiremotej.BalanceBoard;
+import wiiremotej.WiiRemoteJ;
+import wiiremotej.event.BBButtonEvent;
+import wiiremotej.event.BBMassEvent;
+import wiiremotej.event.BalanceBoardAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.intel.bluetooth.BlueCoveConfigProperties;
+
 
 /**
  * Implements BalanceBoardListener and acts as a general test class. Note that you can ignore the main method pretty much,
@@ -26,6 +29,11 @@ public class BBImpl extends BalanceBoardAdapter
 	private static Double weight;
 	// List of measured weight data
 	private static List<Double> weights_list = null;
+	
+	// Returned value
+	private static Double finalWeight = 0.0;
+	
+	private static Thread t;
 
 	
 	
@@ -38,7 +46,7 @@ public class BBImpl extends BalanceBoardAdapter
 	
 	
 
-	public void getWeight()
+	public Double getWeight()
 	{
 		// To handle java.lang.IllegalArgumentException: PCM 11, PCM values restricted by JSR-82 to minimum 4097, see BlueCoveConfigProperties.PROPERTY_JSR_82_PSM_MINIMUM_OFF
 		System.setProperty(BlueCoveConfigProperties.PROPERTY_JSR_82_PSM_MINIMUM_OFF, "true");
@@ -51,18 +59,31 @@ public class BBImpl extends BalanceBoardAdapter
 		{            
 			findAndConnectBalanceBoard();
 
-			System.out.println("\tRuntime go...");
+			System.out.println("\tRunning: use the Wii Balance Board...");
 			Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
 				public void run(){
 					board.disconnect();
 				}
 			}
-					));
+			));
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			System.exit(1);
+			// System.exit(1);
 		}
+		
+		// Thread to wait the end of the WiiBB use
+		try {
+			t = new Thread();
+			synchronized ( t ) {
+				t.wait();
+			}
+			// System.out.println("\tEnd of wait...");
+			return finalWeight;
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return finalWeight;
 	}
 
 	public void findAndConnectBalanceBoard() throws InterruptedException, IOException
@@ -79,7 +100,7 @@ public class BBImpl extends BalanceBoardAdapter
 			catch (IllegalStateException ise) {
 				ise.printStackTrace();
 				System.out.println("/!\\ Failed to connect board. Trying again.");
-				System.exit(1);
+				// System.exit(1);
 			}
 		}
 
@@ -90,10 +111,10 @@ public class BBImpl extends BalanceBoardAdapter
 
 	public void disconnected()
 	{
+		System.out.println("Wii disconnected!");
 		System.exit(0);
 	}
 
-	@Override
 	public void massInputReceived(BBMassEvent evt)
 	{
 		Double weight_trans = evt.getTotalMass();
@@ -103,20 +124,26 @@ public class BBImpl extends BalanceBoardAdapter
 			weights_list.add(weight);
 	}
 
-	@Override
 	public void buttonInputReceived(BBButtonEvent evt) {
-		if (evt.wasPressed()) {
-			System.out.println("Wii BB deconnexion.");
-			board.disconnect();
-			Double weightSum = 0.0;
-			for ( Double d : weights_list ) {
-				weightSum += d;
+		synchronized ( t ) {
+			
+			if (evt.wasPressed()) {
+				System.out.println("Wii BB deconnexion.");
+				board.disconnect();
+				Double weightSum = 0.0;
+				for ( Double d : weights_list ) {
+					weightSum += d;
+				}
+				finalWeight = weightSum / weights_list.size();
+				System.out.println("\tINFO: measured weight is: " + finalWeight);
+				
+				t.notify();
+				// System.out.println("\tJust notify the thread!");
+				// System.exit(0);
 			}
-			Double finalWeight = weightSum / weights_list.size();
-			System.out.println("\tINFO: measured weight is: " + finalWeight);
-			System.exit(0);
+			
 		}
+		
 	}
-
 
 }
