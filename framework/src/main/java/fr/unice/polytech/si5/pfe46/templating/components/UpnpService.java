@@ -14,8 +14,6 @@ import fr.unice.polytech.si5.pfe46.utils.Pair;
  */
 public class UpnpService {
 
-	// TODO: package name and imports
-	
 	private String name;
 	private Set<UpnpMethod> methods;
 

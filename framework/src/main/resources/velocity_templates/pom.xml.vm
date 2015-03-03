@@ -9,6 +9,13 @@
   <url>http://maven.apache.org</url>
   <repositories>
     <repository>
+        <id>central</id>
+        <url>https://repo1.maven.org/maven2</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+    <repository>
         <id>4thline-repo</id>
         <url>http://4thline.org/m2</url>
         <snapshots>
