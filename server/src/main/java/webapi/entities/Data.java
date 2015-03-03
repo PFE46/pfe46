@@ -8,10 +8,13 @@ import javax.persistence.*;
 public abstract class Data {
     
     @Id
-    @Column(nullable=false,name="objectName")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable=false, name="objectName")
     private String objectName;
 
-    @Column(name="date")
+    @Column(nullable=false, name="date")
     private String date;
 
     public Data() {}
@@ -20,6 +23,13 @@ public abstract class Data {
     {
         this.setDate(date);
         this.setObjectName(objectName);
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getObjectName() { return objectName; }
@@ -31,7 +41,9 @@ public abstract class Data {
 
     @Override
     public String toString() {
-        return "[objectName = " + objectName
+        return "[id = " + id
+                + " - objectName = " + objectName
                 + " - date = " + date;
     }
+
 }
