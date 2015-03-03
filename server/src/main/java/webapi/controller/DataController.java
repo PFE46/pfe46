@@ -9,15 +9,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import webapi.entities.Data;
 import webapi.service.DataService;
-import webapi.service.DataServiceImpl;
 
 @RestController("dataController")
 public class DataController {
@@ -37,12 +36,16 @@ public class DataController {
     
     /** ########## Getters archives JSON ########## **/
 
-    @RequestMapping("/test")
+    @RequestMapping(value = "/test",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String test() {
         return "Test OK! :D";
     }
 
-    @RequestMapping("/weight/archives")
+    @RequestMapping(value = "/weight/archives",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String getWeightJSON() {
 
         logger.info("New call to the weight WS");
@@ -69,7 +72,9 @@ public class DataController {
 
     }
 
-    @RequestMapping("/body_fat/archives")
+    @RequestMapping(value = "/body_fat/archives",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String getBodyFatJSON() {
 
         logger.info("New call to the body fat WS");
@@ -96,7 +101,9 @@ public class DataController {
 
     }
 
-    @RequestMapping("/heart_rate/archives")
+    @RequestMapping(value = "/heart_rate/archives",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String getHeartRateJSON() {
 
         logger.info("New call to the heart rate WS");
@@ -123,7 +130,9 @@ public class DataController {
 
     }
 
-    @RequestMapping("/objects_infos/archives")
+    @RequestMapping(value = "/objects_infos/archives",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String getObjectsInfosJSON() {
 
         logger.info("New call to the objects infos WS");
@@ -152,7 +161,9 @@ public class DataController {
 
     /** ########## Add/get datas ########## **/
 
-    @RequestMapping("/db_data")
+    @RequestMapping(value = "/db_data",
+            method = RequestMethod.GET,
+            produces = "application/json")
     public String getDBdata() {
         logger.info("New call to get database objets WS");
 
@@ -169,9 +180,9 @@ public class DataController {
         return res;
     }
 
-    @RequestMapping("/weight/{objname}/{weight}")
-    public void addWeightData(@PathParam("objname") String objname,
-                              @PathParam("weight") String weight) {
+    @RequestMapping(value = "/weight/{objname}/{weight}") // method = RequestMethod.POST)
+    public void addWeightData(@PathVariable String objname,
+                              @PathVariable String weight) {
         logger.info("New call to add weight data WS");
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd HH:mm:ss

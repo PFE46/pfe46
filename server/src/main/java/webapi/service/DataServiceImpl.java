@@ -22,8 +22,6 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Iterable<Data> getAllDataFromDatabase() {
-        System.out.println("\tCall to getAllDataFromDatabase()");
-        System.out.println("\t\twith this.dataRepository = " + this.dataRepository.toString());
         return this.dataRepository.findAll();
     }
 
