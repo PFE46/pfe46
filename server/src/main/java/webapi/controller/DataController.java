@@ -9,12 +9,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+import javax.websocket.server.PathParam;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import webapi.entities.Data;
-import webapi.service.DataServiceImpl;
 
-import javax.websocket.server.PathParam;
+import webapi.entities.Data;
+import webapi.service.DataService;
+import webapi.service.DataServiceImpl;
 
 @RestController("dataController")
 public class DataController {
@@ -29,7 +32,9 @@ public class DataController {
     // Logger
     private Logger logger = Logger.getLogger(DataController.class.getName());
 
-
+    @Autowired
+    private DataService dataService;
+    
     /** ########## Getters archives JSON ########## **/
 
     @RequestMapping("/test")
@@ -152,8 +157,7 @@ public class DataController {
         logger.info("New call to get database objets WS");
 
         String res = "";
-        DataServiceImpl dsi = new DataServiceImpl();
-        Iterable<Data> resList = dsi.getAllDataFromDatabase();
+        Iterable<Data> resList = dataService.getAllDataFromDatabase();
         if ( resList.iterator().hasNext() == false )
             return "Empty DB.";
         else {
@@ -173,9 +177,8 @@ public class DataController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // yyyy-MM-dd HH:mm:ss
         Date d = new Date();
         String date = dateFormat.format(d);
-        DataServiceImpl dsi = new DataServiceImpl();
         try {
-            dsi.addNewWeightData(date, objname, weight);
+            dataService.addNewWeightData(date, objname, weight);
         } catch (IOException e) {
             e.printStackTrace();
         }

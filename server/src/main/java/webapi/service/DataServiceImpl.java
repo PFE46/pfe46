@@ -1,17 +1,17 @@
 package webapi.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 import webapi.entities.BodyFatData;
 import webapi.entities.Data;
 import webapi.entities.HeartRateData;
 import webapi.entities.WeightData;
 import webapi.repository.DataRepository;
-
-import java.io.*;
 
 @Service
 @Component

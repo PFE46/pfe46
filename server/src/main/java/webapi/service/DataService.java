@@ -1,10 +1,9 @@
 package webapi.service;
 
-import webapi.entities.Data;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import webapi.entities.Data;
 
 public interface DataService {
 
