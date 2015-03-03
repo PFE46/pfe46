@@ -25,7 +25,8 @@ Les sorties d'un `mvn -v` sont les suivantes :
 	Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/jre
 	Default locale: en_US, platform encoding: UTF-8
 	OS name: "mac os x", version: "10.10.1", arch: "x86_64", family: "mac"
-<span/>
+
+<br/>
 
 	machine2 » mvn -v
 	Apache Maven 3.0.5
