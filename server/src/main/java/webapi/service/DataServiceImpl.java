@@ -22,25 +22,27 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Iterable<Data> getAllDataFromDatabase() {
+        System.out.println("\tCall to getAllDataFromDatabase()");
+        System.out.println("\t\twith this.dataRepository = " + this.dataRepository.toString());
         return this.dataRepository.findAll();
     }
 
     @Override
     public void addNewWeightData(String date, String objectName, String weight) throws FileNotFoundException, IOException {
         WeightData wd = new WeightData(date, objectName, weight);
-        dataRepository.save(wd);
+        this.dataRepository.save(wd);
     }
 
     @Override
     public void addNewHeartRateData(String date, String objectName, String heartRate) throws FileNotFoundException, IOException {
         HeartRateData hrd = new HeartRateData(date, objectName, heartRate);
-        dataRepository.save(hrd);
+        this.dataRepository.save(hrd);
     }
 
     @Override
     public void addNewBodyFatData(String date, String objectName, String bodyFat) throws FileNotFoundException, IOException {
         BodyFatData bfd = new BodyFatData(date, objectName, bodyFat);
-        dataRepository.save(bfd);
+        this.dataRepository.save(bfd);
     }
 
     @Override
