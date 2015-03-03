@@ -1,10 +1,20 @@
 package webapi.service;
 
+import webapi.entities.Data;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface DataService {
+
+    /**
+     * Get all DB datas
+     * @return
+     */
+    public Iterable<Data> getAllDataFromDatabase();
+
+
 
     // ---------- Add new data functions ----------
 

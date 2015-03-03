@@ -1,8 +1,12 @@
 package webapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import webapi.entities.BodyFatData;
+import webapi.entities.Data;
 import webapi.entities.HeartRateData;
 import webapi.entities.WeightData;
 import webapi.repository.DataRepository;
@@ -10,12 +14,19 @@ import webapi.repository.DataRepository;
 import java.io.*;
 
 @Service
+@Component
 public class DataServiceImpl implements DataService {
 
     @Autowired
+    @Qualifier("dataRepo")
     private DataRepository dataRepository;
 
 
+
+    @Override
+    public Iterable<Data> getAllDataFromDatabase() {
+        return this.dataRepository.findAll();
+    }
 
     @Override
     public void addNewWeightData(String date, String objectName, String weight) throws FileNotFoundException, IOException {
