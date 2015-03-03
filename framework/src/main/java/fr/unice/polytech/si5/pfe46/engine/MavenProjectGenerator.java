@@ -29,6 +29,10 @@ public class MavenProjectGenerator {
 	private static final String MAVEN_POM_XML = "pom.xml";
 	private static final String MODULES_FOLDER = "modules";
 
+	// FIXME
+	private static final String DEFAULT_LIBRARY_GROUPID = "com";
+	private static final String DEFAULT_LIBRARY_VERSION = "1.0";
+	
 	/**
 	 * Singleton accessor.
 	 * 
@@ -70,12 +74,12 @@ public class MavenProjectGenerator {
 			for (UpnpService service : device.getServices())
 			{
 				String serviceCode = VelocityCodeGenerator.getIntance().generateService(service);
-				createZipEntry(out, MAVEN_STRUCTURE_JAVA + service.getName() + ".java", serviceCode);
+				createZipEntry(out, MAVEN_STRUCTURE_JAVA + service.getName() + ".java", serviceCode.getBytes());
 			}
 
 			// Generate the device file
 			String serverCode = VelocityCodeGenerator.getIntance().generateServer(device);
-			createZipEntry(out, MAVEN_STRUCTURE_JAVA + device.getDeviceName() + "Server.java", serverCode);
+			createZipEntry(out, MAVEN_STRUCTURE_JAVA + device.getDeviceName() + "Server.java", serverCode.getBytes());
 
 			// Generate pom.xml
 			Set<MavenDependency> dependencies = new HashSet<>(); // TODO
@@ -92,16 +96,16 @@ public class MavenProjectGenerator {
 					addLibrary(out, jar);
 
 					MavenDependency dep = new MavenDependency();
-					dep.setGroupId("com");
+					dep.setGroupId(DEFAULT_LIBRARY_GROUPID);
 					dep.setArtifactId(jar.getName().substring(0, jar.getName().lastIndexOf(".")));
-					dep.setVersion("1.0");
+					dep.setVersion(DEFAULT_LIBRARY_VERSION);
 					dep.setLocalJar(true);
 					dependencies.add(dep);
 				}
 			}
 
 			String pomXmlCode = VelocityCodeGenerator.getIntance().generatePomXml(device, dependencies);
-			createZipEntry(out, MAVEN_POM_XML, pomXmlCode);
+			createZipEntry(out, MAVEN_POM_XML, pomXmlCode.getBytes());
 
 			// Add modules
 			if (requirements.getJavaModules() != null)
@@ -130,23 +134,7 @@ public class MavenProjectGenerator {
 	}
 
 	/**
-	 * Create a zip entry in out with filename and content.
-	 * 
-	 * @param out ZipOutputStream.
-	 * @param fileName Name of the generated file.
-	 * @param content Content of the generated file.
-	 * @throws IOException If an IOException is thrown.
-	 */
-	private void createZipEntry(ZipOutputStream out, String fileName, String content) throws IOException
-	{
-		ZipEntry entry = new ZipEntry(fileName);
-		entry.setMethod(ZipEntry.DEFLATED);
-		out.putNextEntry(entry);
-		out.write(content.getBytes());
-	}
-
-	/**
-	 * If the given file is a file then add it to the given zipoutputstream,
+	 * If the given file is a file then add it to the given ZipOutputStream,
 	 * otherwise if it is a directory then add each module that it contains.
 	 * 
 	 * @param out ZipOutputStream
@@ -159,7 +147,7 @@ public class MavenProjectGenerator {
 		{
 			for (File f : file.listFiles())
 			{
-				// FIXME: remove MainModules.java
+				// FIXME: remove MainModule.java
 				if (!f.getName().equals("MainModule.java"))
 				{
 					addModule(out, f);
@@ -168,25 +156,42 @@ public class MavenProjectGenerator {
 		}
 		else
 		{
-			ZipEntry entry = new ZipEntry("/src/main/java/modules/" + file.getName());
-
-			entry.setMethod(ZipEntry.DEFLATED);
-			out.putNextEntry(entry);
-			out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-		}
+			String fileName = "/src/main/java/modules/" + file.getName();
+			
+			createZipEntry(out, fileName, Files.readAllBytes(Paths.get(file.getAbsolutePath())));		}
 	}
 
+	/**
+	 * Add library to the generated local Maven repository.
+	 * @param out ZipOutputStream
+	 * @param file Library
+	 * @throws IOException If an IOException is thrown.
+	 */
 	private void addLibrary(ZipOutputStream out, File file) throws IOException
 	{
-		ZipEntry entry = new ZipEntry("/localrepo" 
-										+ "/com/"
-										+ file.getName().substring(0, file.getName().lastIndexOf("."))
-										+ "/1.0/"
-										+ file.getName().substring(0, file.getName().lastIndexOf(".")) + "-1.0.jar");
+		String groupId = DEFAULT_LIBRARY_GROUPID; // FIXME
+		String version = DEFAULT_LIBRARY_VERSION; // FIXME
+		String artifactId = file.getName().substring(0, file.getName().lastIndexOf(".")); // remove file extension
+		
+		String fileName = "/localrepo/" + groupId + "/" + artifactId + "/" + version + "/" + artifactId + "-" + version + ".jar";
 
+		createZipEntry(out, fileName, Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+	}
+
+	/**
+	 * Create a zip entry in out with filename and content.
+	 * 
+	 * @param out ZipOutputStream.
+	 * @param fileName Name of the generated file.
+	 * @param content Content of the generated file.
+	 * @throws IOException If an IOException is thrown.
+	 */
+	private void createZipEntry(ZipOutputStream out, String fileName, byte[] content) throws IOException
+	{
+		ZipEntry entry = new ZipEntry(fileName);
 		entry.setMethod(ZipEntry.DEFLATED);
 		out.putNextEntry(entry);
-		out.write(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+		out.write(content);
 	}
 
 }
