@@ -18,10 +18,7 @@ import java.io.*;
 public class DataServiceImpl implements DataService {
 
     @Autowired
-    @Qualifier("dataRepo")
     private DataRepository dataRepository;
-
-
 
     @Override
     public Iterable<Data> getAllDataFromDatabase() {

@@ -1,15 +1,13 @@
 package webapi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "weight_datas")
 public class WeightData extends Data {
 
+    @Column
     private String weight;
-
-
 
     public WeightData() {}
 
@@ -18,12 +16,7 @@ public class WeightData extends Data {
         this.setWeight(weight);
     }
 
-
-
-    public String getWeight() {
-        return weight;
-    }
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
+    public String getWeight() { return weight; }
+    public void setWeight(String weight) { this.weight = weight; }
+    
 }

@@ -12,7 +12,5 @@ import webapi.entities.Data;
  *  - findOne(String id)
  *  - findAll(Iterable<String> ids)
  */
-@Repository
 public interface DataRepository extends CrudRepository<Data, String> {
-
 }

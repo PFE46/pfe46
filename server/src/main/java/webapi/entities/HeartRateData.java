@@ -1,15 +1,13 @@
 package webapi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "heart_rate_datas")
 public class HeartRateData extends Data {
 
+    @Column
     private String heartRate;
-
-
 
     public HeartRateData() {}
 
@@ -18,12 +16,7 @@ public class HeartRateData extends Data {
         this.setHeartRate(heartRate);
     }
 
-
-
-    public String getHeartRate() {
-        return heartRate;
-    }
-    public void setHeartRate(String heartRate) {
-        this.heartRate = heartRate;
-    }
+    public String getHeartRate() { return heartRate; }
+    public void setHeartRate(String heartRate) { this.heartRate = heartRate; }
+    
 }
