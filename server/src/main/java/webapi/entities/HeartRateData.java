@@ -18,5 +18,12 @@ public class HeartRateData extends Data {
 
     public String getHeartRate() { return heartRate; }
     public void setHeartRate(String heartRate) { this.heartRate = heartRate; }
+
+
+
+    @Override
+    public String toString() {
+        return super.toString() + ", \"heartRate\" : " + heartRate + "}";
+    }
     
 }

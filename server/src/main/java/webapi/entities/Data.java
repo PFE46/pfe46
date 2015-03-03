@@ -41,9 +41,9 @@ public abstract class Data {
 
     @Override
     public String toString() {
-        return "[id = " + id
-                + " - objectName = " + objectName
-                + " - date = " + date;
+        return "{\"id\" : " + id
+                + ", \"objectName\" : " + objectName
+                + ", \"date\" : " + date;
     }
 
 }

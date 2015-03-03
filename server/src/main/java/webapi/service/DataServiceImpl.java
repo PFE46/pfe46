@@ -20,9 +20,16 @@ public class DataServiceImpl implements DataService {
     @Autowired
     private DataRepository dataRepository;
 
+
+
     @Override
     public Iterable<Data> getAllDataFromDatabase() {
         return this.dataRepository.findAll();
+    }
+
+    @Override
+    public Iterable<Data> getWiiBBDataFromDatabase() {
+        return this.dataRepository.findByObjectName("WiiBoard");
     }
 
     @Override

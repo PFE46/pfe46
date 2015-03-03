@@ -19,5 +19,11 @@ public class BodyFatData extends Data {
 
     public String getBodyFat() { return bodyFat; }
     public void setBodyFat(String bodyFat) { this.bodyFat = bodyFat; }
+
+
+    @Override
+    public String toString() {
+        return super.toString() + ", \"bodyFat\" : " + bodyFat + "}";
+    }
     
 }

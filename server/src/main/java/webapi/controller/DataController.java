@@ -176,8 +176,29 @@ public class DataController {
             while ( it.hasNext() ) {
                 res += it.toString();
             }
+            return res;
         }
-        return res;
+    }
+
+    @RequestMapping(value = "/db_data/wii_bb",
+            method = RequestMethod.GET,
+            produces = "application/json")
+    public String getWiiBBdata() {
+        logger.info("New call to get Wii Balance Board data WS");
+
+        String res = "";
+        Iterable<Data> resList = dataService.getWiiBBDataFromDatabase();
+        if ( resList.iterator().hasNext() == false )
+            return "Empty DB.";
+        else {
+            return resList.iterator().next().toString();
+            /*
+            Iterator it = resList.iterator();
+            while ( it.hasNext() ) {
+                res += it.toString();
+            }
+            */
+        }
     }
 
     @RequestMapping(value = "/weight/{objname}/{weight}") // method = RequestMethod.POST)

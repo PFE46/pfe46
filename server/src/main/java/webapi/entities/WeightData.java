@@ -18,5 +18,11 @@ public class WeightData extends Data {
 
     public String getWeight() { return weight; }
     public void setWeight(String weight) { this.weight = weight; }
+
+
+    @Override
+    public String toString() {
+        return super.toString() + ", \"weight\" : " + weight + "}";
+    }
     
 }

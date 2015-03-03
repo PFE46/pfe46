@@ -13,6 +13,12 @@ public interface DataService {
      */
     public Iterable<Data> getAllDataFromDatabase();
 
+    /**
+     * Get all Wii BB datas
+     * @return
+     */
+    public Iterable<Data> getWiiBBDataFromDatabase();
+
 
 
     // ---------- Add new data functions ----------
