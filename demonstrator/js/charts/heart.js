@@ -1,4 +1,4 @@
-var hears_data = [
+var heart_data = [
         {"date":"2015-02-15","frequence":60},
         {"date":"2015-02-15","frequence":90},
         {"date":"2015-02-16","frequence":85},
@@ -19,7 +19,6 @@ var hears_data = [
         "marginTop":10,
         "marginBottom":26,
         "pathToImages": "http://www.amcharts.com/lib/3/images/",
-        "dataProvider": hears_data,
         "valueAxes": [{
             "id":"weightAxis",
             "axisAlpha": 0,

@@ -29,7 +29,7 @@ function makeChart(chart) {
 }
 
 chart = makeChart(weight_chart);
-chart.dataProvider = getWeight();
+getMeasures('weight');
 
 chart.addListener('rendered', function (event) {
     populateLegend();
@@ -55,7 +55,7 @@ $('a[data-action="toggle-menu"]').on('click', function () {
             $graph_container.hide();
             $objects_container.show();
 
-            populateObjects();
+            getObjectsInfos();
         }
         else {
 
@@ -65,15 +65,21 @@ $('a[data-action="toggle-menu"]').on('click', function () {
                 $('#objects-details').empty();
             }
 
+            var type = '';
+
             if (parent_id == 'weight-button') {
                 chart = makeChart(weight_chart);
+                type = 'weight';
             }
             else if (parent_id == 'bpm-button') {
                 chart = makeChart(heart_chart);
+                type = 'heart_rate';
             }
             else if (parent_id == 'grease-button') {
-                chart = makeChart(grease_chart);
+                chart = makeChart(fat_chart);
+                type = 'body_fat';
             }
+            getMeasures(type);
             populateLegend();
 
         }
@@ -169,5 +175,32 @@ function toggleChart(idx) {
     else {
         chart.hideGraph(chart.graphs[idx]);
     }
+
+}
+
+
+function getMeasures(type) {
+
+    $.ajax({
+        url: 'http://localhost:8080/' + type + '/archives',
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            chart.dataProvider = data;
+            chart.validateData();
+            console.log(chart.dataProvider);
+        },
+        error: function (error) {
+            if (type == 'weight') {
+                chart.dataProvider = weight_data;
+            }
+            else if (type == 'body_fat') {
+                chart.dataProvider = fat_data;
+            }
+            else if (type == 'heart_rate') {
+                chart.dataProvider = heart_data;
+            }
+        }
+    });
 
 }

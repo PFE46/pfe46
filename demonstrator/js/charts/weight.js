@@ -69,19 +69,3 @@ var weight_data = [
         }
     }
 ;
-
-function getWeight() {
-
-    $.ajax({
-        url: 'localhost:8080/weight/archives',
-        type: 'GET',
-        success: function (data) {
-            console.log(data);
-            return data;
-        },
-        error: function (error) {
-            return weight_data;
-        }
-    });
-
-}

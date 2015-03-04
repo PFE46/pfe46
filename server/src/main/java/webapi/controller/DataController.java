@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import webapi.entities.Data;
 import webapi.service.DataService;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController("dataController")
 public class DataController {
 
@@ -33,6 +35,13 @@ public class DataController {
 
     @Autowired
     private DataService dataService;
+
+    private void setResponseHeaders(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+    }
     
     /** ########## Getters archives JSON ########## **/
 
@@ -46,9 +55,11 @@ public class DataController {
     @RequestMapping(value = "/weight/archives",
             method = RequestMethod.GET,
             produces = "application/json")
-    public String getWeightJSON() {
+    public String getWeightJSON(HttpServletResponse response) {
 
         logger.info("New call to the weight WS");
+
+        setResponseHeaders(response);
 
         BufferedReader br = null;
         String weightJSON = "";
@@ -75,9 +86,11 @@ public class DataController {
     @RequestMapping(value = "/body_fat/archives",
             method = RequestMethod.GET,
             produces = "application/json")
-    public String getBodyFatJSON() {
+    public String getBodyFatJSON(HttpServletResponse response) {
 
         logger.info("New call to the body fat WS");
+
+        setResponseHeaders(response);
 
         BufferedReader br = null;
         String bodyFatJSON = "";
@@ -104,9 +117,11 @@ public class DataController {
     @RequestMapping(value = "/heart_rate/archives",
             method = RequestMethod.GET,
             produces = "application/json")
-    public String getHeartRateJSON() {
+    public String getHeartRateJSON(HttpServletResponse response) {
 
         logger.info("New call to the heart rate WS");
+
+        setResponseHeaders(response);
 
         BufferedReader br = null;
         String heartRateJSON = "";
@@ -133,9 +148,11 @@ public class DataController {
     @RequestMapping(value = "/objects_infos/archives",
             method = RequestMethod.GET,
             produces = "application/json")
-    public String getObjectsInfosJSON() {
+    public String getObjectsInfosJSON(HttpServletResponse response) {
 
         logger.info("New call to the objects infos WS");
+
+        setResponseHeaders(response);
 
         BufferedReader br = null;
         String objectsInfosJSON = "";
@@ -164,8 +181,10 @@ public class DataController {
     @RequestMapping(value = "/db_data",
             method = RequestMethod.GET,
             produces = "application/json")
-    public String getDBdata() {
+    public String getDBdata(HttpServletResponse response) {
         logger.info("New call to get database objets WS");
+
+        setResponseHeaders(response);
 
         String res = "";
         Iterable<Data> resList = dataService.getAllDataFromDatabase();

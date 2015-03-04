@@ -1,0 +1,25 @@
+{
+  "name": "demonstrator",
+  "version": "1.0.0",
+  "authors": [
+    "Adrien Casanova <Adrien.CASANOVA@polytech.unice.fr>"
+  ],
+  "description": "PFE-46 demonstrator",
+  "main": "index.html",
+  "keywords": [
+    "IoT"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-material-design": "~0.2.2"
+  }
+}

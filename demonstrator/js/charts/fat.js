@@ -1,4 +1,4 @@
-var grease_data = [
+var fat_data = [
         {"date":"2015-02-20","grease":50},
         {"date":"2015-02-22","grease":58},
         {"date":"2015-02-23","grease":50},
@@ -9,7 +9,7 @@ var grease_data = [
         {"date":"2015-02-28","grease":53},
         {"date":"2015-02-29","grease":51}
     ],
-    grease_chart = {
+    fat_chart = {
         "theme": "none",
         "type": "serial",
         "autoMargins": false,

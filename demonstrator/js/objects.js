@@ -1,6 +1,9 @@
-function populateObjects() {
+var objects = [
+    {id:'789DEF012', name: 'Smart Body Analyser'},
+    {id:'123ABC456', name: 'Wii Balance Board', status:"ON", batteryLevel: 75}
+];
 
-    var objects = getObjectsInfos();
+function populateObjects(objects) {
 
     objects.forEach(function (object) {
 
@@ -71,13 +74,15 @@ function buildObjectInfoItem(icon_class, title, text_content, text_label) {
 
 function getObjectsInfos() {
 
-    // TODO : implement WS call
-
-    var objects = [
-        {id:'789DEF012', name: 'Smart Body Analyser'},
-        {id:'123ABC456', name: 'Wii Balance Board', status:"ON", batteryLevel: 75}
-    ];
-
-    return objects;
+    $.ajax({
+        url: 'http://localhost:8080/objects_infos/archives',
+        type: 'GET',
+        success: function (data) {
+            populateObjects(data);
+        },
+        error: function (error) {
+            populateObjects(objects);
+        }
+    });
 
 }
