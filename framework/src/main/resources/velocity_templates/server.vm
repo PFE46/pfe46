@@ -1,0 +1,68 @@
+package fr.unice.polytech.pfe46.generated;
+
+import org.fourthline.cling.UpnpService;
+import org.fourthline.cling.UpnpServiceImpl;
+import org.fourthline.cling.binding.annotations.AnnotationLocalServiceBinder;
+import org.fourthline.cling.model.DefaultServiceManager;
+import org.fourthline.cling.model.ValidationException;
+import org.fourthline.cling.model.meta.*;
+import org.fourthline.cling.model.types.DeviceType;
+import org.fourthline.cling.model.types.UDADeviceType;
+import org.fourthline.cling.model.types.UDN;
+
+/**
+ * Auto-generated code.
+ * 
+ * PFE46, SI5 - Polytech Nice Sophia, France
+ */
+public class ${device.deviceName}Server implements Runnable {
+
+    public static void main(String[] args)
+    {
+        Thread serverThread = new Thread(new ${device.deviceName}Server());
+        serverThread.setDaemon(false);
+        serverThread.start();
+    }
+
+    public LocalDevice createDevice() throws ValidationException
+    {
+        DeviceIdentity identity = new DeviceIdentity(UDN.uniqueSystemIdentifier("$device.deviceName"));
+        DeviceType type = new UDADeviceType("$device.deviceName", 1);
+        DeviceDetails details = new DeviceDetails("$device.friendlyName",
+                                                    new ManufacturerDetails("$device.manufacturerName"));
+
+#foreach( $service in $device.services )
+        LocalService<$service.name> $service.name = new AnnotationLocalServiceBinder().read(${service.name}.class);
+        ${service.name}.setManager(new DefaultServiceManager($service.name, ${service.name}.class));
+        
+#end
+        return new LocalDevice(identity, type, details, new LocalService[] {
+#foreach( $service in $device.services )
+            $service.name
+#end
+        });
+    }
+
+    public void run()
+    {
+        try
+        {
+            final UpnpService upnpService = new UpnpServiceImpl();
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
+                public void run() {
+                    upnpService.shutdown();
+                }
+            });
+
+            upnpService.getRegistry().addDevice(createDevice());
+        }
+        catch (Exception ex)
+        {
+            System.err.println("Exception: " + ex);
+            ex.printStackTrace();
+        }
+    }
+
+}

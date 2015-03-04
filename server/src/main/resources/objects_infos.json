@@ -1,0 +1,4 @@
+[
+        {id:'789DEF012', name: 'Smart Body Analyser'},
+        {id:'123ABC456', name: 'Wii Balance Board', status:"ON", batteryLevel: 75}
+    ]

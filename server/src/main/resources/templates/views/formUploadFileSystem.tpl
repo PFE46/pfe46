@@ -1,0 +1,1 @@
+layout 'formUploadLayout.tpl', title: 'Upload file in file system', action:'/filesystem/document'
