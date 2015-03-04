@@ -5,7 +5,7 @@
     "Adrien Casanova <Adrien.CASANOVA@polytech.unice.fr>"
   ],
   "description": "PFE-46 demonstrator",
-  "main": "index.html",
+  "main": "master.js",
   "keywords": [
     "IoT"
   ],
