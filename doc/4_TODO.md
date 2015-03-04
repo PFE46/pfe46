@@ -23,3 +23,9 @@ La pile techologique choisie permet au proxy généré de gérer les évènement
 Cependant, ceci n'est pas encore implémenté.
 
 Exemple : le mesure mon pouls avec un bracelet connecté, celui-ci en informe le proxy, qui lève à son tour en évènement UPnP.
+
+## Choix automatique de l'objet
+
+Actuellement, l'objet à partir duquel récupérer l'information est fourni en paramètre de la méthode.
+
+Idéalement, le proxy choisirait lui-même quel objet utiliser. Ceci pose cependant plusieurs problèmes : comment choisir l'objet à utilier ? Comment peut-on être sûr qu'il est accessible ? Que la valeur qu'il va retourner est cohérente avec celle que les autres objets auraient retourné ?
