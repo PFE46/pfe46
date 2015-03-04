@@ -184,11 +184,10 @@ function getMeasures(type) {
     $.ajax({
         url: 'http://localhost:8080/' + type + '/archives',
         type: 'GET',
+        crossDomain: true,
         success: function (data) {
-            console.log(data);
             chart.dataProvider = data;
             chart.validateData();
-            console.log(chart.dataProvider);
         },
         error: function (error) {
             if (type == 'weight') {
@@ -200,6 +199,7 @@ function getMeasures(type) {
             else if (type == 'heart_rate') {
                 chart.dataProvider = heart_data;
             }
+            chart.validateData();
         }
     });
 
