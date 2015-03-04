@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Générateur de proxy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+	<style type="text/css" media="screen">
+	    #editor { 
+	        position: absolute;
+	        top: 50px;
+	        right: 0;
+	        bottom: 0;
+	        left: 0;
+	    }
+	    #submitbutton {
+	        padding-top: 7px;
+	    }
+	</style>
+</head>
+<body>
+	<form action="#" th:action="@{/project.zip}" th:object="${jsonInput}" method="post">
+    
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">PFE46 - Générateur de proxy</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li id="submitbutton"><button type="submit" class="btn btn-default">Générer</button></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+		<div id="editor"></div>
+		<textarea th:field="*{value}" id="editorcontent"/>
+	</form>
+	
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	    var editor = ace.edit("editor");
+	    editor.setTheme("ace/theme/monokai");
+	    editor.getSession().setMode("ace/mode/json");
+	    editor.setShowPrintMargin(false);
+	    
+	    var textarea = $('#editorcontent');
+	    editor.getSession().on('change', function(){
+	    	textarea.val(editor.getSession().getValue());
+	    });
+	</script>
+</body>
+</html>

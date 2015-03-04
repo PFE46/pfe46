@@ -1,8 +1,9 @@
 package fr.unice.polytech.si5.pfe46.engine;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -10,7 +11,6 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import fr.unice.polytech.si5.pfe46.Config;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.MavenDependency;
 import fr.unice.polytech.si5.pfe46.templating.VelocityCodeGenerator;
 import fr.unice.polytech.si5.pfe46.templating.components.UpnpDevice;
@@ -59,16 +59,17 @@ public class MavenProjectGenerator {
 	 * 
 	 * @param device Device used to generate the Maven project.
 	 * @throws IOException If an IOException is thrown.
+	 * @throws URISyntaxException 
 	 */
-	public void generateMavenProject(UpnpDevice device, Requirements requirements) throws IOException
+	public byte[] generateMavenProject(UpnpDevice device, Requirements requirements) throws IOException, URISyntaxException
 	{
+		ByteArrayOutputStream zipBytes = null;
 		ZipOutputStream out = null;
-		File zipProject = null;
-
+		
 		try
 		{
-			zipProject = new File(Config.GENERATED_FILE_NAME);
-			out = new ZipOutputStream(new FileOutputStream(zipProject));
+			zipBytes = new ByteArrayOutputStream();
+			out = new ZipOutputStream(zipBytes);
 
 			// Generate services files
 			for (UpnpService service : device.getServices())
@@ -126,10 +127,15 @@ public class MavenProjectGenerator {
 			addModule(out, modulesDirectory);
 			File jsonProcess = new File("src/main/java/fr/unice/polytech/si5/pfe46/utils/JsonProcess.java");
 			addModule(out, jsonProcess);
+			
+			out.close();
+			
+			return zipBytes.toByteArray();
 		}
 		finally
 		{
 			out.close();
+			zipBytes.close();
 		}
 	}
 

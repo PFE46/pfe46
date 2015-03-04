@@ -23,10 +23,10 @@ public class MethodContentParser{
     	return INSTANCE;
     }
 
-    public /*Pair<*/String/*, Set<Modules>>*/ buildContent(List<MethodBinding> binding)
+    public String buildContent(List<MethodBinding> binding)
     {
         StringBuilder res = new StringBuilder();
-        //Set<Modules> modules = new HashSet<>();
+
         boolean first = true;
         
         for (MethodBinding methodBinding : binding)
@@ -63,7 +63,7 @@ public class MethodContentParser{
         }
         res.append("return \"{\\\"error\\\":\\\"true\\\"}\";");
 
-        return /*new Pair<String, Set<Modules>>(*/res.toString()/*, modules)*/;
+        return res.toString();
     }
 
     private String wsContent(WsRestMethodBinding methodBinding)

@@ -14,7 +14,7 @@ import fr.unice.polytech.si5.pfe46.modules.OAuth.exceptions.NoSuchProviderExcept
 
 public class MainModule {
 
-    public static void main(String args[]) {
+    public /*static*/ void main(String args[]) {
 
 //        String uri = "http://graph.facebook.com/haitaar";
 //        JSONObject jo = WSHandler.getInstance().get(uri);

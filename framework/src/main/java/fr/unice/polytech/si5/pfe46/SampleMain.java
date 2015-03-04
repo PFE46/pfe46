@@ -15,7 +15,7 @@ import fr.unice.polytech.si5.pfe46.templating.exceptions.UpnpStateVariableConfli
 
 public class SampleMain 
 {
-    public static void main( String[] args ) throws IOException
+    public /*static*/ void main( String[] args ) throws IOException
     {
     	/*********************
     	 * 

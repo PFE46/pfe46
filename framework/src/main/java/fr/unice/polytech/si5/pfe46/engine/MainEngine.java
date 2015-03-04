@@ -2,6 +2,7 @@ package fr.unice.polytech.si5.pfe46.engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
@@ -12,7 +13,7 @@ import fr.unice.polytech.si5.pfe46.utils.Pair;
 
 public class MainEngine {
 
-	public static void main(String[] args)
+	public /*static*/ void main(String[] args)
 	{
 		String json = "{\"objects\":[{\"name\":\"WiiBoard\",\"protocol\":\"LIBRARY\",\"libraryType\":"
 				+ "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
@@ -52,7 +53,7 @@ public class MainEngine {
 		 *						// Round Double result to two decimal places
 		 *						res = (double) Math.round(res * 100);
 		 *						res = res/100;
-		 *						return "{\"weight\": \"" + res + "\"}";
+		 *						return String.valueOf(res);
 		 *					"
 		 * 				},
 		 * 				{
@@ -98,7 +99,7 @@ public class MainEngine {
 			MavenProjectGenerator.getInstance().generateMavenProject(upnpDevice, requirements);
 		}
 		catch (JsonParsingException | IOException
-				| UpnpStateVariableConflictException | DuplicateMethodSignatureException e)
+				| UpnpStateVariableConflictException | DuplicateMethodSignatureException | URISyntaxException e)
 		{
 			e.printStackTrace();
 		}
