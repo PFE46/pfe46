@@ -18,7 +18,6 @@ var grease_data = [
         "marginTop":10,
         "marginBottom":26,
         "pathToImages": "http://www.amcharts.com/lib/3/images/",
-        "dataProvider": grease_data,
         "valueAxes": [{
             "id":"weightAxis",
             "axisAlpha": 0,

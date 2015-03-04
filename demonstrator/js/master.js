@@ -25,11 +25,11 @@ function generatechartData() {
 }
 
 function makeChart(chart) {
-
     return AmCharts.makeChart("chartdiv", chart);
 }
 
 chart = makeChart(weight_chart);
+chart.dataProvider = getWeight();
 
 chart.addListener('rendered', function (event) {
     populateLegend();
