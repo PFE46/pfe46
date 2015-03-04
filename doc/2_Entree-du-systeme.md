@@ -5,7 +5,8 @@
 L'entrée dans le système se fait en utilisant une chaîne de caractères au format JSON respectant les conventions suivantes :
 
 - une liste d'objets, correspondants aux objets connectés ;
-- une liste de méthodes.
+- une liste de méthodes;
+- une liste de dépendances.
 
 ## Les objets
 
@@ -27,8 +28,8 @@ L'attribut `object` du binding doit correspondre au nom de l'un des objets défi
 
 Dans l'exemple suivant nous disposons de deux objets connectés :
 
-- une Wii Balance Board, qui fonctionne en Bluetooth ;
-- un pèse-personnes Withings Smart Body Analyzer, qui expose ses services via un service web REST.
+- une Wii Balance Board, qui fonctionne en Bluetooth mais en passant par la librairie `WiiRemoteJ`;
+- un pèse-personnes Withings Smart Body Analyzer, qui expose ses services via un service web REST sécurisé avec OAuth.
 
 On souhaite générer un proxy qui permette de récupérer le poids sur ces deux objets.
 
@@ -38,7 +39,7 @@ La première étape est de définir la liste des objets connectés auxquels sera
 
 ###### Wii Balance Board
 
-La communication avec la Wii Balance Board s'effectue en Bluetooth. On définit donc le protocole à `BLUETOOTH` en spécifiant l'identifiant Bluetooth de l'objet (`deviceId`).
+La communication avec la Wii Balance Board s'effectue en Bluetooth. Cependant, la communication avec celle-ci étant complexe, nous préférons passer par une librairie. On définit donc le protocole à `LIBRARY` en spécifiant qu'il s'agit d'un JAR (`libraryType`).
 
 ###### Withings Smart Body Analyzer
 
@@ -56,7 +57,7 @@ Ensuite, il faut lier cette méthode à celles fournies par les objets connecté
 
 La première étape est d'indiquer l'objet connecté spécifié au dessus auquel sera lié cette méthode, ici `WiiBoard`.
 
-Comme la communication s'établit en Bluetooth, on utilise ici un objet de classe `BluetoothMethodBinding`. Enfin, l'adresse Bluetooth pour récupérer le poids est `getWiiBoardWeightAddress`.
+Comme la communication s'établit avec la librairie, on spécifie le code qui sera intégré dans le service UPnP généré. Pour plus d'informations, voire le paragraphe (`Définition des dépendances`).
 
 ###### Pour le Withings Smart Body Analyzer
 
@@ -64,38 +65,147 @@ De la même manière que pour la Wii Balance Board, on doit indiquer l'objet : `
 
 Comme l'accès à la donnée se fait via un service web REST, on spécifie le endpoint et le verbe HTTP.
 
-#### Résultat
+#### Définition des dépendances
+
+Pour utiliser la librairie `WiiRemoteJ`, deux dépendances Maven sont requises : `bluecove` et `bluecove-gpl`.
+
+On spéficie également le chemin du JAR de `WiiRemoteJ` dans `localJars`.
+
+Comme le code utilisant la librairie reste "compliqué", nous l'impliquons sous forme de module. De même que pour le JAR, nous spécifions le chemin d'accès. Le code d'exemple correspondant est disponible dans le dossier `src/main/resources/WiiBalance/`.
+
+Enfin, le code qui sera inséré dans la méthode du service UPnP (`methodCode`) est donc celui qui appelle ce module.
+
+#### Exemple
+
+###### Fichier en entrée
 
 Le fichier JSON correspondant est donc le suivant :
 
     {
-      "objects": [
+      "objects":[
         {
-          "name": "WiiBoard",
-          "protocol": "BLUETOOTH",
-          "deviceId": "wiiboardid"
+          "name"       : "WiiBoard",
+          "protocol"   : "LIBRARY",
+          "libraryType": "JAR",
+          "id"         : "WiiRemoteJ"
         },
         {
-          "name": "SmartBodyAnalyzer",
+          "name"    : "SmartBodyAnalyzer",
           "protocol": "WS_REST",
           "useOAuth": true,
           "provider": "Withings"
         }
       ],
-      "methods": [
+      "methods":[
         {
-          "name": "getWeight",
-          "bindings": [
+          "name":"getWeight",
+          "bindings":[
             {
-              "object": "WiiBoard",
-              "bluetoothMethod": "getWiiBoardWeightAddress"
+              "object"    : "WiiBoard",
+              "methodCode": "
+                BBImpl bbimpl = new BBImpl();
+                Double res = bbimpl.getWeight();
+                // Round Double result to two decimal places
+                res = (double) Math.round(res * 100);
+                res = res/100;
+                return res;
+              "
             },
             {
-              "object": "SmartBodyAnalyzer",
-              "endpoint": "/api/measures",
-              "verb": "GET"
+              "object"  : "SmartBodyAnalyzer",
+              "endpoint": "https://wbsapi.withings.net/measure?action=getmeas&meastype=1",
+              "verb"    : "GET"
             }
           ]
         }
+      ],
+      "mavenDependencies":[
+        {
+          "groupId"   : "net.sf.bluecove",
+          "artifactId": "bluecove",
+          "version"   : "2.1.0"
+        },
+        {
+          "groupId"   : "net.sf.bluecove",
+          "artifactId": "bluecove-gpl",
+          "version"   : "2.1.0"
+        }
+      ],
+      "localJars":[
+        "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar"
+      ],
+      "javaModules":[
+        "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/BBImpl.java"
       ]
     }
+
+###### Projet en sortie
+    
+Ce qui va générer le projet suivant :
+
+    .
+    ├── localrepo
+    │   └── com
+    │       └── WiiRemoteJ
+    │           └── 1.0
+    │               └── WiiRemoteJ-1.0.jar
+    ├── pom.xml
+    └── src
+        └── main
+            └── java
+                ├── DeviceServer.java
+                ├── Service.java
+                └── modules
+                    ├── BBImpl.java
+                    ├── JsonProcess.java
+                    ├── Modules.java
+                    ├── NoSuchProviderException.java
+                    ├── OAuthHandler.java
+                    ├── WSHandler.java
+                    └── WithingsApi.java
+
+Les fichiers inclus dans le répertoire `module` sont ceux qui sont dans le package `.modules` du framework, ainsi que ceux fournis en attribut `javaModules` du JSON d'entrée.
+
+Les librairies JAR sont placées dans un repository local Maven. Le numéro de vesion est pour le moment codé en dur, mais cela n'a pas d'autre impacte qu'une mauvaise lisibilité.
+
+Le `pom.xml` contient bien les dépendances `bluecove` et `bluecove-gpl` fournies.
+
+Enfin, le `Service.java` expose la méthode suivante :
+
+    @UpnpAction(out = @UpnpOutputArgument(name = "jsonOutput"))
+    public String getWeight(@UpnpInputArgument(name = "parameters") String parameters,        
+    						@UpnpInputArgument(name = "objectName") String objectName)
+    	throws NoSuchProviderException
+    {
+    	if (objectName.equals("WiiBoard"))
+    	{
+    		BBImpl bbimpl = new BBImpl();
+    		Double res = bbimpl.getWeight();
+    		res = (double) Math.round(res * 100);
+    		res = res/100;
+    		return String.valueOf(res);
+    	}
+    	else if (objectName.equals("SmartBodyAnalyzer"))
+    	{
+    		Map<String, String> params = JsonProcess.jsonToMap(parameters);
+    		String res = OAuthHandler.getInstance()
+    								 .callServiceGet("Withings", "https://wbsapi.withings.net/measure?action=getmeas&meastype=1",
+    								 				 params.get("apiKey"), params.get("apiSecret"), params.get("accessToken"),
+    								 				 params.get("secretToken"), params);
+    		return res;
+    	}
+    	
+    	return "{\"error\":\"true\"}";
+    }
+    
+Le code correspondant à l'appel au service web REST sécurisé par OAuth a été généré automatiquement puisque existant comme module générique. Pour la balance WiiBoard en revanche, s'agissant d'un module fourni par l'utilisateur, le code est celui renseigné dans le fichier JSON.
+
+Pour tester le service généré, il est possible de l'appeler avec des paramètres :
+
+* Wii Balance Board
+	* `parameters`: `{}`
+	* `objectName`: `WiiBoard`
+
+* Smart Body Analyzer
+	* `parameters`: `{"apiKey": "x", "apiSecret": "x", "accessToken": "x", "secretToken": "x"}`
+	* `objectName`: `SmartBodyAnalyzer`

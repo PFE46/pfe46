@@ -18,7 +18,7 @@ public class MainEngine {
 				+ "\"JAR\", \"id\": \"WiiRemoteJ\"},{\"name\":\"SmartBodyAnalyzer\",\"protocol\":\"WS_REST\",\"useOAuth"
 				+ "\":true,\"provider\":\"Withings\"}],\"methods\":[{\"name\":\"getWeight\",\"bindings"
 				+ "\":[{\"object\":\"WiiBoard\","
-				+ "\"methodCode\":\"BBImpl bbimpl = new BBImpl(); Double res = bbimpl.getWeight(); res = (double) Math.round(res * 100); res = res/100;return String.valueOf(res);\", \"imports\": [\"ImportClass\"]},{"
+				+ "\"methodCode\":\"BBImpl bbimpl = new BBImpl(); Double res = bbimpl.getWeight(); res = (double) Math.round(res * 100); res = res/100;return String.valueOf(res);\"},{"
 				+ "\"object\":\"SmartBodyAnalyzer\",\"endpoint\":\"https://wbsapi.withings.net/measure?action=getmeas&meastype=1\",\"verb\":\"GET\"}]}],"
 				+ "\"mavenDependencies\":[{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove\",\"version\":\"2.1.0\"},{\"groupId\":\"net.sf.bluecove\",\"artifactId\":\"bluecove-gpl\",\"version\":\"2.1.0\"}],"
 				+ "\"localJars\":[\"" + new File("src/main/resources/WiiBalance/WiiRemoteJ.jar").getAbsolutePath() + "\"], "
@@ -53,10 +53,7 @@ public class MainEngine {
 		 *						res = (double) Math.round(res * 100);
 		 *						res = res/100;
 		 *						return "{\"weight\": \"" + res + "\"}";
-		 *					",
-		 * 					"imports":[
-		 * 						"ImportClass"
-		 * 					]
+		 *					"
 		 * 				},
 		 * 				{
 		 * 					"object":"SmartBodyAnalyzer",

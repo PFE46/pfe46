@@ -1,6 +1,4 @@
-# Reprise du projet
-
-## Installation
+# Installation
 
 Le projet utilise Maven pour être compilé. Ce gestionnaire de dépendances (en version 3 ou supérieure) et un JDK (1.7 ou supérieur) doivent donc être installés sur la machine de développement.
 
@@ -41,9 +39,3 @@ Pour vérifier l'installation, ceci devrait fonctionner :
     $ git clone https://VictorSalle@bitbucket.org/VictorSalle/pfe46.git
     $ cd pfe46/framework
     $ mvn install
-
-## Problèmes connus
-
-### Proxy généré
-
-* Pour communiquer avec la Wii Balance Board, la librairie `WiiRemoteJ` est utilisée. Elle ne fonctionne que sous une architecture 32 bits.

@@ -10,6 +10,9 @@ Pour ce faire, on utilise le singleton `InputParser`.
 
     Input input = InputParser.getInstance().parse(json);
 
+![InputParser](http://users.polytech.unice.fr/~salle/pfe/images/inputparser.png =700x)
+
+
 ## 2. Créer un UPnP device
 
 L'idée est d'extraire de l'objet `Input` deux informations : un `UpnpDevice` et un objet `Requirements` qui contiendra les éléments requis (JAR local, dépendance Maven...).
@@ -18,6 +21,8 @@ Le singleton `InputToUpnpDevice` a été mis en place pour cela.
 
     Pair<UpnpDevice, Requirements> device = InputToUpnpDevice.getInstance().getDevice(input);
 
+![InputToUpnpDevice](http://users.polytech.unice.fr/~salle/pfe/images/inputtodevice.png =700x)
+
 ## 3. Créer le projet Maven
 
 Le singleton `MavenProjectGenerator` se charge de transformer le `UpnpDevice` et ses `Requirements` en un projet Maven.
@@ -25,3 +30,5 @@ Le singleton `MavenProjectGenerator` se charge de transformer le `UpnpDevice` et
     MavenProjectGenerator.getInstance().generateMavenProject(upnpDevice, requirements);
 
 Une archive `project.zip` est alors créée.
+
+![InputToUpnpDevice](http://users.polytech.unice.fr/~salle/pfe/images/mavengenerator.png =700x)
