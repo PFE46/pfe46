@@ -1,6 +1,5 @@
 package fr.unice.polytech.si5.pfe46.modules;
 
-import java.util.HashMap;
 import java.util.List;
 
 import fr.unice.polytech.si5.pfe46.engine.InputParser;
@@ -9,8 +8,6 @@ import fr.unice.polytech.si5.pfe46.engine.exceptions.JsonParsingException;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.Input;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.Method;
 import fr.unice.polytech.si5.pfe46.engine.inputtype.methods.MethodBinding;
-import fr.unice.polytech.si5.pfe46.modules.OAuth.OAuthHandler;
-import fr.unice.polytech.si5.pfe46.modules.OAuth.exceptions.NoSuchProviderException;
 
 public class MainModule {
 

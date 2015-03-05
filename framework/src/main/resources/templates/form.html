@@ -33,7 +33,55 @@
 			</div>
 		</nav>
 	
-		<div id="editor"></div>
+		<div id="editor">{
+    "objects": [
+        {
+            "name": "WiiBoard",
+            "protocol": "LIBRARY",
+            "libraryType": "JAR"
+        },
+        {
+            "name": "SmartBodyAnalyzer",
+            "protocol": "WS_REST",
+            "useOAuth": true,
+            "provider": "Withings"
+        }
+    ],
+    "methods": [
+        {
+            "name": "getWeight",
+            "bindings": [
+                {
+                    "object": "WiiBoard",
+                    "methodCode": "BBImpl bbimpl = new BBImpl();Double res = bbimpl.getWeight();res = (double) Math.round(res * 100); res = res/100; return String.valueOf(res);"
+                },
+                {
+                    "object": "SmartBodyAnalyzer",
+                    "endpoint": "https://wbsapi.withings.net/measure?action=getmeas&amp;meastype=1",
+                    "verb": "GET"
+                }
+            ]
+        }
+    ],
+    "javaModules": [
+        "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/BBImpl.java"
+    ],
+    "localJars": [
+        "/Users/victorsalle/Cours/PFE/pfe46/framework/src/main/resources/WiiBalance/WiiRemoteJ.jar"
+    ],
+    "mavenDependencies": [
+        {
+            "groupId": "net.sf.bluecove",
+            "artifactId": "bluecove",
+            "version": "2.1.0"
+        },
+        {
+            "groupId": "net.sf.bluecove",
+            "artifactId": "bluecove-gpl",
+            "version": "2.1.0"
+        }
+    ]
+}</div>
 		<textarea th:field="*{value}" id="editorcontent"/>
 	</form>
 	
@@ -46,6 +94,7 @@
 	    editor.setShowPrintMargin(false);
 	    
 	    var textarea = $('#editorcontent');
+	    textarea.val(editor.getSession().getValue());
 	    editor.getSession().on('change', function(){
 	    	textarea.val(editor.getSession().getValue());
 	    });

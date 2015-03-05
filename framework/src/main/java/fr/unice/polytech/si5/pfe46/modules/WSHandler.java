@@ -22,7 +22,6 @@ public class WSHandler {
     public String get(String uri)
     {
         String result = restTemplate.getForObject(uri, String.class);
-        //JSONObject response = new JSONObject(result);
 
         return result;
     }
@@ -30,7 +29,6 @@ public class WSHandler {
     public String get(String uri, HashMap<String, String> params)
     {
         String result = restTemplate.getForObject(uri, String.class, params);
-        //JSONObject response = new JSONObject(result);
 
         return result;
     }
