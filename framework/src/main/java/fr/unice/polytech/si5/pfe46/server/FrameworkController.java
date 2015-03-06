@@ -29,7 +29,7 @@ public class FrameworkController {
 	/**
 	 * GET /project
 	 */
-	@RequestMapping(value = "/project", method = RequestMethod.GET)
+	@RequestMapping(value = "/generator", method = RequestMethod.GET)
 	public String get(Model model)
 	{
 		model.addAttribute("jsonInput", new JsonInput());
