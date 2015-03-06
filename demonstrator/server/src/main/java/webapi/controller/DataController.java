@@ -234,5 +234,19 @@ public class DataController {
             e.printStackTrace();
         }
     }
+	
+	
+	
+	 @RequestMapping(value = "/weight/wii_bb")
+    public void addWeightFromWiiBB() {
+        logger.info("New call to get weight from Wii BB WS");
+
+        String[] args = new String[0];
+        try {
+            Client.main(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

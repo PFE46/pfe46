@@ -29,3 +29,7 @@ Exemple : le mesure mon pouls avec un bracelet connecté, celui-ci en informe le
 Actuellement, l'objet à partir duquel récupérer l'information est fourni en paramètre de la méthode.
 
 Idéalement, le proxy choisirait lui-même quel objet utiliser. Ceci pose cependant plusieurs problèmes : comment choisir l'objet à utilier ? Comment peut-on être sûr qu'il est accessible ? Que la valeur qu'il va retourner est cohérente avec celle que les autres objets auraient retourné ?
+
+## Lien avec le client Cling
+
+Actuellement le serveur web, situé dans la partie `demonstrator/server` du projet, expose des services web permettant la récupération des données des différents aux objets au format JSON. D'autre part, le client Cling a également été développé (`Client.java` également situé dans le dossier du `demonstrator/server`), communiquant directement avec le proxy et récupérant les données dynamiquement. Cependant, le lien entre ces deux parties reste à faire.
