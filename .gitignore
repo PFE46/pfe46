@@ -10,6 +10,7 @@
 
 # Unwanted
 target
+bin
 
 # Mac OS
 .DS_Store
@@ -26,4 +27,7 @@ target
 
 # Generated files
 project.zip
-framework/src/main/resources/modules
+project
+
+# Bower
+bower_components

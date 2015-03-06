@@ -34,8 +34,10 @@ Les sorties d'un `mvn -v` sont les suivantes :
 	Default locale: fr_FR, platform encoding: UTF-8
 	OS name: "linux", version: "3.13.0-46-generic", arch: "i386", family: "unix"
 
-Pour vérifier l'installation, ceci devrait fonctionner :
+Pour vérifier l'installation :
 
     $ git clone https://VictorSalle@bitbucket.org/VictorSalle/pfe46.git
     $ cd pfe46/framework
-    $ mvn install
+    $ mvn install spring-boot:run
+    
+Si un ZIP est proposé au téléchargement en cliquant sur `Générer` sur `http://localhost:8080/generator` alors l'installation est fonctionnelle. (Veiller à bien modifier les valeurs de `PATH_TO_PROJECT_ROOT_FOLDER` dans `javaModules` et `localJars`.)
